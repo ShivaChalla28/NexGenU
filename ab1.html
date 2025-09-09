@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automatic Card Slider</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="style.css">
+    <style>
+    @import url('https://fonts.googleapis.com/css?family=Poppins:wght@400');
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    body {
+        font-family: 'Poppins', sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;  /* Sidebar: added to ensure content stacks vertically */
+        background-color: #f4f4f4;
+    }
+    
+    .swiper {
+        width: 100%;
+    }
+    
+    .swiper-wrapper {
+        width: 100%;
+        height: 35em;
+        display: flex;
+        align-items: center;
+    }
+    
+    .card {
+    width: 12em;   /* Set a slightly larger width for clear image display */
+    height: 22em;  /* Increased height to give more space for content and image */
+    background-color: #fff;
+    border-radius: 2em;
+    box-shadow: 0 0 2em rgba(0, 0, 0, 0.2);
+    padding: 2em 1em;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 2em;
+    transition: transform 0.3s ease; /* Added smooth scaling effect */
+}
+
+.card:hover {
+    transform: scale(1.05); /* Hover effect */
+}
+
+.swiper-slide:not(.swiper-slide-active) {
+    filter: blur(2px); /* Slightly stronger blur for inactive cards */
+}
+
+.card_image {
+    width: 10em;        /* Maintain the appropriate size for the image */
+    height: 10em;       /* Maintain the appropriate size for the image */
+    border-radius: 50%; /* Ensures the image is round */
+    border: 5px solid #9176ff;
+    padding: 3px;
+    margin-bottom: 2em; /* Ensure there's space below the image */
+}
+
+.card_content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card_title {
+    font-size: 1.5em;
+    font-weight: 500;
+    margin: 0.5em 0; /* Adjusted margin for better spacing */
+}
+
+.card_name {
+    color: #9176ff;
+    font-size: 1.2em; /* Increased font size */
+}
+
+.card_text {
+    font-size: 1em;
+    margin: 1em 0;
+    color: #555;
+    text-align: center; /* Center align text for better visibility */
+}
+
+.card_btn {
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    padding: 0.5em 1em;
+    font-size: 1em;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 1em;
+    border-radius: 0.5em;
+    transition: background-color 0.3s ease;
+}
+
+.card_btn:hover {
+    background-color: #3e8e41;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .card {
+        width: 15em;  /* Slightly larger cards for small screens */
+        height: auto;  /* Auto height for flexibility based on content */
+        margin: 1em;
+    }
+
+    .card_image {
+        width: 8em;   /* Adjusted size for mid-size screens */
+        height: 8em;  /* Adjusted size for mid-size screens */
+    }
+
+    .swiper-wrapper {
+        height: auto;
+    }
+
+    .card_content {
+        padding: 0 1em;
+    }
+
+    .swiper-slide {
+        max-width: 100%;
+    }
+}
+
+/* Additional responsiveness */
+@media (max-width: 480px) {
+    .swiper {
+        padding: 0 10px; /* Adding padding on mobile screens */
+    }
+
+    .card {
+        width: 14em; /* Adapted size for mobile */
+        margin: 1em auto;
+    }
+
+    .card_image {
+        width: 7em;   /* Size for small screens */
+        height: 7em;  /* Size for small screens */
+        border-radius: 50%; /* Keeping the image round */
+    }
+}
+
+/* Button styles */
+.back-button, .next-button {
+    position: absolute;
+    top: 20px;
+    padding: 10px;
+    background-color: rgba(68, 206, 17, 0.5);
+    color: rgb(201, 18, 40);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+    z-index: 10;
+}
+
+.back-button {
+    left: 20px;
+}
+
+.next-button {
+    right: 20px;
+}
+
+.back-button:hover, .next-button:hover {
+    background-color: rgba(250, 52, 2, 0.7);
+}
+
+/* About Us Section */
+.about-us {
+    width: 90%;
+    margin: 30px 0;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.about-us h3 {
+    color: #0066cc;
+}
+
+.about-us p {
+    margin-bottom: 15px; /* Spacing between paragraphs */
+}
+    </style>    
+</head>
+<body>
+    <button class="back-button"><a href="weh.html">Back</a></button>
+    <section class="swiper mySwiper">
+        <div class="swiper-wrapper">
+            <div class="card swiper-slide">
+                <div class="card_image">
+                    <img src="user1.jpg" alt="">
+                </div>
+                <div class="card_content">
+                    <span class="card_title">Web Designer</span>
+                    <span class="card_name">Rose Bush</span>
+                    <p class="card_text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam porro iusto voluptates deserunt fugit!</p>
+                    <button class="card_btn"><a href="USER 1.html">View More</a></button>
+                </div>
+            </div>
+            <div class="card swiper-slide">
+                <div class="card_image">
+                    <img src="user_2.jpg" alt="">
+                </div>
+                <div class="card_content">
+                    <span class="card_title">Software Engineer</span>
+                    <span class="card_name">John Doe</span>
+                    <p class="card_text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam porro iusto voluptates deserunt fugit!</p>
+                    <button class="card_btn"><a href="USER 2.html">View More</a></button>
+                </div>
+            </div>
+            <div class="card swiper-slide">
+                <div class="card_image">
+                    <img src="user_2.jpg" alt="">
+                </div>
+                <div class="card_content">
+                    <span class="card_title">Software Engineer</span>
+                    <span class="card_name">John Doe</span>
+                    <p class="card_text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam porro iusto voluptates deserunt fugit!</p>
+                    <button class="card_btn"><a href="USER 3.html">View More</a></button>
+                </div>
+            </div>
+            <div class="card swiper-slide">
+                <div class="card_image">
+                    <img src="user_2.jpg" alt="">
+                </div>
+                <div class="card_content">
+                    <span class="card_title">Software Engineer</span>
+                    <span class="card_name">John Doe</span>
+                    <p class="card_text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam porro iusto voluptates deserunt fugit!</p>
+                    <button class="card_btn"><a href="USER 4.html">View More</a></button>
+                </div>
+            </div>
+            <div class="card swiper-slide">
+                <div class="card_image">
+                    <img src="user_2.jpg" alt="">
+                </div>
+                <div class="card_content">
+                    <span class="card_title">Software Engineer</span>
+                    <span class="card_name">John Doe</span>
+                    <p class="card_text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam porro iusto voluptates deserunt fugit!</p>
+                    <button class="card_btn"><a href="USER 5.html">View More</a></button>
+                </div>
+            </div>
+            <div class="card swiper-slide">
+                <div class="card_image">
+                    <img src="user_3.jpg" alt="">
+                </div>
+                <div class="card_content">
+                    <span class="card_title">Data Scientist</span>
+                    <span class="card_name">Jane Smith</span>
+                    <p class="card_text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam porro iusto voluptates deserunt fugit!</p>
+                    <button class="card_btn"><a href="USER 6.html">View More</a></button>
+                </div>
+            </div>
+            <div class="card swiper-slide">
+                <div class="card_image">
+                    <img src="user_3.jpg" alt="">
+                </div>
+                <div class="card_content">
+                    <span class="card_title">Data Scientist</span>
+                    <span class="card_name">Jane Smith</span>
+                    <p class="card_text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam porro iusto voluptates deserunt fugit!</p>
+                    <button class="card_btn"><a href="USER 7.html">View More</a></button>
+                </div>
+            </div>
+            <div class="card swiper-slide">
+                <div class="card_image">
+                    <img src="user_3.jpg" alt="">
+                </div>
+                <div class="card_content">
+                    <span class="card_title">Data Scientist</span>
+                    <span class="card_name">Jane Smith</span>
+                    <p class="card_text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam porro iusto voluptates deserunt fugit!</p>
+                    <button class="card_btn"><a href="USER 8.html">View More</a></button>
+                </div>
+            </div>
+            <div class="card swiper-slide">
+                <div class="card_image">
+                    <img src="user_3.jpg" alt="">
+                </div>
+                <div class="card_content">
+                    <span class="card_title">Data Scientist</span>
+                    <span class="card_name">Jane Smith</span>
+                    <p class="card_text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam porro iusto voluptates deserunt fugit!</p>
+                    <button class="card_btn"><a href="USER 9.html">View More</a></button>
+                </div>
+            </div>
+            <div class="card swiper-slide">
+                <div class="card_image">
+                    <img src="user_3.jpg" alt="">
+                </div>
+                <div class="card_content">
+                    <span class="card_title">Data Scientist</span>
+                    <span class="card_name">Jane Smith</span>
+                    <p class="card_text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam porro iusto voluptates deserunt fugit!</p>
+                    <button class="card_btn"><a href="USER 10.html">View More</a></button>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-pagination"></div>
+    </section>
+
+    <!-- About Us Section -->
+    <section class="about-us">
+        <h3>About Us</h3>
+        <p>Welcome to [Your Platform Name], an innovative e-learning platform dedicated to providing accessible, high-quality, and comprehensive learning experiences for learners of all backgrounds and skill levels. Our mission is to empower individuals to unlock their full potential and thrive in a rapidly evolving world through transformative education.</p>
+        <p>At [Your Platform Name], we believe that learning should be a continuous journey, and we are committed to making education flexible, engaging, and personalized. Whether you’re looking to advance in your career, explore new skills, or gain expertise in emerging fields, we offer a vast library of courses designed to meet your unique learning needs.</p>
+        <p>Our platform combines cutting-edge technology, expert instructors, and a wide range of courses to create an enriching environment where learners can thrive. We offer a blend of video lessons, interactive quizzes, hands-on projects, and real-world scenarios to ensure that knowledge is not only acquired but deeply understood and applied.</p>
+        <p>We strive to bridge the gap between formal education and real-world skills, equipping learners with the tools they need to excel in their professional and personal lives.</p>
+        
+        <h3>Our Mission</h3>
+        <p>Our mission is to democratize education and make it accessible to everyone, anywhere, anytime. We are committed to providing a platform that offers diverse and high-quality learning experiences tailored to different needs, learning styles, and goals.</p>
+        
+        <h3>Our Vision</h3>
+        <p>Our vision is to create a global community of lifelong learners who are constantly evolving, adapting, and thriving in a world full of challenges and opportunities. We envision a world where education is a bridge to success, and learners have the resources they need to shape their futures.</p>
+        
+        <h3>Long-Term Goals</h3>
+        <p><strong>Global Reach and Accessibility:</strong> Expand our platform’s reach to learners across the globe, breaking down barriers to education. We are focused on making learning accessible in remote and underserved communities by offering multilingual content, affordable pricing, and mobile compatibility.</p>
+        <p><strong>Comprehensive Learning Paths:</strong> Develop detailed learning paths for various industries and professions, so that learners can gain a structured and holistic education. These paths will help users master everything from fundamental concepts to specialized knowledge in fields like Data Science, AI, Blockchain, Cybersecurity, Web Development, and more.</p>
+        <p><strong>Personalized Learning Experience:</strong> Leverage AI and machine learning to create a more personalized learning experience for each user. We plan to develop smart recommendations, customized course schedules, and progress tracking to keep learners motivated and on the path to success.</p>
+        <p><strong>Partnerships with Leading Institutions and Experts:</strong> Foster partnerships with top universities, industry leaders, and organizations to provide the most up-to-date, industry-relevant courses and certifications. Our aim is to offer learners not just theoretical knowledge but also practical insights directly from the experts.</p>
+        <p><strong>Corporate Training and Development Programs:</strong> Develop corporate partnerships to provide tailored training programs for businesses and their employees. Our goal is to help organizations build a highly skilled workforce by offering specialized training solutions that enhance team performance and leadership capabilities.</p>
+        <p><strong>Continuous Content Updates:</strong> Continuously expand our course offerings to include the latest industry trends, technological advancements, and best practices. We will work closely with subject matter experts to ensure that our content remains current, relevant, and practical.</p>
+        <p><strong>Support for Lifelong Learning:</strong> Encourage and support lifelong learning by offering courses that cater to different stages of personal and professional development. Whether it's exploring a hobby, switching careers, or advancing in a current job, we aim to provide the resources learners need at every stage of their journey.</p>
+        <p><strong>Empowerment through Certification:</strong> Provide globally recognized certifications that help learners stand out in the job market. By collaborating with top employers, we aim to make our certifications valuable and trusted by hiring managers worldwide.</p>
+
+        <h3>The Main Theme</h3>
+        <p>At [Your Platform Name], our main theme is "Empowering Learners, Transforming Futures." We are driven by the belief that education has the power to transform lives, careers, and societies. By offering a platform that is flexible, comprehensive, and future-focused, we are committed to empowering our learners with the skills and knowledge they need to thrive in an ever-changing world.</p>
+
+        <h3>Key Features</h3>
+        <ul>
+            <li>Wide Range of Courses – From tech to business, creative fields, and more, we offer a variety of courses designed for learners at every level.</li>
+            <li>Interactive Learning – Learn by doing through quizzes, assignments, and projects that make the learning process more engaging and practical.</li>
+            <li>Expert Instructors – Learn from top instructors and professionals with years of experience in their respective fields.</li>
+            <li>Flexible Learning – Access courses anytime, anywhere, and learn at your own pace with mobile-friendly options.</li>
+            <li>Certification and Recognition – Receive certifications that help you stand out in the job market and pursue your professional goals.</li>
+        </ul>
+
+        <p>By choosing [Your Platform Name], you’re not just enrolling in a course, but starting a journey towards a brighter, more successful future. Join us today and start learning with purpose!</p>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script> <!-- Corrected link -->
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            loop: true,              // Enable looping
+            spaceBetween: 30,        // Space between slides
+            slidesPerView: 1,        // Number of slides visible at once
+            autoplay: {
+                delay: 2500,         // Autoplay delay in ms
+                disableOnInteraction: false, // Keep autoplay even after interaction
+            },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+            breakpoints: {
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 30
+                },
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 20
+                },
+                480: {
+                    slidesPerView: 1,
+                    spaceBetween: 10
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AP ENGINEERS HUB</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        /* Global Styles */
+        body {
+            margin: 0;
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #0d0d0d;
+            color: #00ff00; /* Cyber Green */
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            text-align: left;
+            padding: 20px;
+            background-color: #6a00ff;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 2em;
+        }
+
+        /* Side Menu Bar */
+        .side-menu {
+            position: fixed;
+            top: 0;
+            left: -250px;
+            width: 250px;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            transition: left 0.3s ease-in-out;
+            padding-top: 60px;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .side-menu ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .side-menu ul li {
+            padding: 15px;
+            text-align: center;
+            background-color: #333;
+            margin: 5px 0;
+            width: 100%;
+        }
+
+        .side-menu ul li:hover {
+            background-color: #444;
+            cursor: pointer;
+        }
+
+        .side-menu ul li a {
+            color: #00ff00;
+            text-decoration: none;
+            font-size: 1.2em;
+        }
+
+        /* Cyber Hacker Animation Background */
+        .cyber-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('glitchy-background.gif') no-repeat center center fixed;
+            background-size: cover;
+            z-index: -1;
+        }
+
+        .glitch-animation {
+            animation: glitch 1s infinite;
+            color: #ff00ff;
+        }
+
+        /* Course Sections */
+        section {
+            margin: 40px;
+        }
+
+        /* Courses Section */
+        .course-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 0 20px;
+        }
+
+        .course-card {
+            background-color: #1a1a1a;
+            color: #00ff00;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0px 4px 12px rgba(0, 255, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .course-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0px 6px 20px rgba(0, 255, 0, 0.3);
+        }
+
+        .course-card h3 {
+            font-size: 1.5em;
+        }
+        .course-card p {
+            font-size: 1.1em;
+        }
+
+        /* Skills Section */
+        .skills-section, .projects-section, .recommendations-section {
+            padding: 50px;
+            text-align: center;
+        }
+
+        .skill, .project, .recommendation {
+            display: inline-block;
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .side-menu {
+            width: 200px;
+            height: 100%;
+            background-color: #333;
+            position: fixed;
+            left: -200px; /* Hide by default */
+            transition: left 0.3s ease;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+        .side-menu ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .side-menu li {
+            padding: 15px;
+        }
+        .side-menu a {
+            color: white;
+            text-decoration: none;
+            display: block;
+        }
+        .side-menu a:hover {
+            background-color: #575757;
+        }
+        #menu-toggle {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: #1DA1F2;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        /* Glitch Animation */
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            /* Adjust header size */
+            header h1 {
+                font-size: 2em;
+            }
+
+           
+
+            /* Adjust course section layout */
+            .course-list {
+                grid-template-columns: 1fr;
+            }
+
+            /* Adjust skills section layout */
+            .skills-section .skill {
+                font-size: 1em;
+            }
+        }
+        
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        .dashboard {
+            background-color: #fff;
+            padding: 2em;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 1200px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 2em;
+            color: #2c3e50;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 3em;
+        }
+
+        .stat-card {
+            background-color: #ffffff;
+            padding: 1.5em;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 25%;
+            text-align: center;
+        }
+
+        .stat-card i {
+            font-size: 3em;
+            color: #8e44ad;
+        }
+
+        .stat-card h3 {
+            font-size: 2em;
+            margin-top: 0.5em;
+            color: #34495e;
+        }
+
+        .stat-card p {
+            color: #7f8c8d;
+            font-size: 1.1em;
+        }
+
+        .stat-card .btn {
+            margin-top: 1em;
+            background-color: #3498db;
+            color: #fff;
+            padding: 0.8em 1.5em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .stat-card .btn:hover {
+            background-color: #2980b9;
+        }
+
+        .footer {
+            margin-top: 3em;
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+
+        .card {
+            background-color: #1a1a1a;
+            color: #00ff00;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0px 4px 12px rgba(0, 255, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+    
+
+    </style>
+</head>
+<body>
+
+    <!-- Side Menu Bar -->
+    <div id="menu" class="side-menu">
+        <ul>
+            <li><a href="ab1.html">ABOUT US</a></li>
+            <li><a href="mailto:flipkartindia021@gmail.com">CERTIFICATE REQUEST</a></li>
+            <li><a href="5.html">EXAMINATION REGISTRATION</a></li>
+            <li><a href="1.html">INTERNSHIPS</a></li>
+            <li><a href="workshop.html">WORKSHOPS REGISTRATION</a></li>
+            <li><a href="govt.html">GOVT OPPURTUNITIES</a></li>
+            <li><a href="corejobs.html">CORE JOBS</a></li>
+            <li><a href="coreintern.html">CORE INTERNSHIPS</a></li>
+            <li><a href="GATE.html">GATE PREPARATIONS</a></li>
+            <li><a href="mailto:22191a0228@jntua.ac.in">CONTACT US</a></li>
+        </ul>
+    </div>
+
+    <!-- Menu Toggle Button -->
+    <button id="menu-toggle">&#9776; NexGenU</button>
+
+    <!-- Main Content -->
+    <div id="main-content">
+        <!-- Header with Profile Info -->
+        <div class="header">
+            <h1><center>AP ENGINEERS HUB</center></h1>
+            <h4><center>Your Gateway to Learning Things</center></h4>
+        </div>
+
+        <!-- Courses Section -->
+        <section id="courses">
+            <h2>Available Courses</h2>
+            <div class="course-list">
+                <!-- Course Cards -->
+                <div class="course-card">
+                    <div class="row">
+                     <div class="card h-100">
+                    <h3>DATA BASE MANAGEMENT</h3>
+                    <button><a href="https://forms.gle/8hpeBueRJbVmupaV6">REGISTER</a></button>
+                    </div>
+                   </div>
+                </div>
+                <div class="course-card">
+                    <h3>NETWORKING</h3>
+                    <button><a href="https://forms.gle/Jv4cjzcdh8Az34BL9">REGISTER</a></button>
+                </div>
+                <div class="course-card">
+                    <h3>DEVOPS AND TESTING</h3>
+                    <button><a href="https://forms.gle/B3GgRuEYDgE9QyhYA">REGISTER</a></button>
+                </div>
+                <div class="course-card">
+                    <h3>BLOCKCHAIN DEVELOPMENT</h3>
+                    <button><a href="https://forms.gle/evnjjkF4CeEhoK2U9">REGISTER</a></button>
+                </div>
+                    <div class="course-card">
+                    <h3>WEB DEVELOPMENT</h3>
+                    <button><a href="https://forms.gle/tG8irkUKyFpuxFT27">REGISTER</a></button>
+                </div>
+                <div class="course-card">
+                    <h3>DATA SCIENCE AND ANALYTICS</h3>
+                    <button><a href="https://forms.gle/17v53zQpeXxyBVhM6">REGISTER</a></button>
+                </div>
+                <div class="course-card">
+                    <h3>ARTIFICIAL INTILLIGENCE</h3>
+                    <button><a href="https://forms.gle/HjH9zATPX71B8vSu8">REGISTER</a></button>
+                </div>
+                <div class="course-card">
+                    <h3>CYBER SECURITY</h3>
+                    <button><a href="https://forms.gle/65uc3XReZs51UQtb8">REGISTER</a></button>
+                </div>
+                <div class="course-card">
+                    <h3>SOFTWARE DEVELOPMENT</h3>
+                    <button><a href="https://forms.gle/bUAXLegcKCyh4fKt6">REGISTER</a></button>
+                </div>
+                <div class="course-card">
+                    <h3>CLOUD ARCHITECTURE</h3>
+                    <button><a href="https://forms.gle/bCSUtBXKtBciRRau5">REGISTER</a></button>
+                </div>
+                <div class="course-card">
+                    <h3>SAP</h3>
+                    <button><a href="https://forms.gle/HUHdGCBjjxvzQRr27">REGISTER</a></button>
+                </div>
+                <div class="course-card">
+                    <h3>LINUX</h3>
+                    <button><a href="https://forms.gle/EoJHNDvV7vm2WBQi7">REGISTER</a></button>
+                </div>
+                <div class="course-card">
+                    <h3>QA AUTOMATION ENGINEER</h3>
+                    <button><a href="https://forms.gle/7aa5CHJ3sBKnhyjJ8">REGISTER</a></button>
+                </div>
+                    <div class="course-card">
+                    <h3>UI/UX DESIGNER</h3>
+                    <button><a href="https://forms.gle/TmJC6svLHMYRxykcA">REGISTER</a></button>
+                </div>
+                <div class="course-card">
+                    <h3>AI ENGINEER</h3>
+                    <button><a href="https://forms.gle/w4YKB856353fmEMi7">REGISTER</a></button>
+                </div>
+                <div class="course-card">
+                    <h3>AWS</h3>
+                    <button><a href="https://forms.gle/8NV4GkU4qi8zfnk28">REGISTER</a></button>
+                </div>
+                <div class="course-card">
+                    <h3>EMBEDED SYSTEM</h3>
+                    <button><a href="https://forms.gle/WCSzCWAE9WHyxsQ67">REGISTER</a></button>
+                </div>
+                <div class="course-card">
+                    <h3>ETHICAL HACKING</h3>
+                    <button><a href="https://forms.gle/v3zxUEBUGFi784Mc7">REGISTER</a></button>
+                </div>
+                <div class="course-card">
+                    <h3>AUTO CAD</h3>
+                    <button><a href="https://forms.gle/1Ru4iKRa8q9GcXey6">REGISTER</a></button>
+                </div>
+                <div class="course-card">
+                    <h3>BUSINES DEVELOPMENT</h3>
+                    <button><a href="https://forms.gle/ZKSDJd1HYN5Ndc3y7">REGISTER</a></button>
+                </div>
+                </div>
+                 
+            </div>
+        </section>
+
+        <section>
+             <div class="card">
+                    <h1>ASSIGNMENT SUBMISSION</h1>
+                    <button><a href="Assignment.html">ASSIGNMENT SUBMISSION</a></button>
+                </div>
+        </section>
+        
+
+       
+    </div>
+    
+   <div class="container">
+    <div class="dashboard">
+        <h1>E-Learning Dashboard</h1>
+
+        <div class="stats">
+            <!-- Students Enrolled -->
+            <div class="stat-card">
+                <i class="fas fa-user-graduate"></i>
+                <h3 id="studentsCount">500+</h3>
+                <p>Students Enrolled</p>
+                
+            </div>
+            
+            <!-- Members Placed -->
+            <div class="stat-card">
+                <i class="fas fa-briefcase"></i>
+                <h3 id="placedCount">450+</h3>
+                <p>Members Placed</p>
+                
+            </div>
+        </div>
+
+<footer>
+        <!-- Social media icons and links -->
+        <div class="social-media">
+            <a href="#"><img src="facebook.png" alt="Facebook"></a>
+            <a href="#"><img src="twitter.png" alt="Twitter"></a>
+            <a href="#"><img src="instagram.png" alt="Instagram"></a>
+        </div>
+    </div>
+</footer>
+
+    
+    <!-- JavaScript for Menu Toggle -->
+    <script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const menu = document.getElementById('menu');
+
+        menuToggle.addEventListener('click', () => {
+            const isOpen = menu.style.left === '0px';
+            menu.style.left = isOpen ? '-200px' : '0px'; // Hide or show the menu
+        });
+</script>
+<script>
+    function registerForCourse(courseId) {
+        // Send POST request to server to register for course
+        fetch('/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ courseId, email: 'user@example.com' })
+        })
+        .then(response => response.json())
+        .then(data => console.log(data));
+    }
+
+    function submitAssignment() {
+        // Get file input value
+        const fileInput = document.getElementById('file-input');
+        const file = fileInput.files[0];
+
+        // Send POST request to server to submit assignment
+        fetch('/submit-assignment', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                courseId: '623dd34c3f7e6e3b8b5e4f7',
+                title: 'Assignment Title',
+                description: 'Assignment Description',
+                file: file
+            })
+        })
+        .then(response => response.json())
+        .then(data => console.log(data));
+    }
+</script>
+        // Handle form submission
+       

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Biography</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        
+        header {
+            background: #35424a;
+            color: #ffffff;
+            padding: 20px 0;
+            text-align: center;
+        }
+        
+        .bio {
+            display: flex;
+            background: #ffffff;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .profile-pic {
+            flex: 1;
+            max-width: 200px;
+        }
+        
+        .profile-pic img {
+            width: 100%;
+            border-radius: 5px;
+        }
+        
+        .details {
+            flex: 2;
+            padding: 20px;
+        }
+        
+        h2, h3 {
+            margin: 0;
+            color: #35424a;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 10px 0;
+            background: #35424a;
+            color: #ffffff;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            margin-top: 20px;
+        }
+        /* Button styles */
+.back-button, .next-button {
+    position: absolute;
+    top: 20px;
+    padding: 10px;
+    background-color: rgba(68, 206, 17, 0.5);
+    color: rgb(201, 18, 40);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+    z-index: 10;
+}
+
+.back-button {
+    left: 20px;
+}
+
+.next-button {
+    right: 20px;
+}
+
+.back-button:hover, .next-button:hover {
+    background-color: rgba(250, 52, 2, 0.7);
+}
+    </style>
+</head>
+<body>
+    <button class="back-button"><a href="ab1.html">Back</a></button>
+    <div class="container">
+        <header>
+            <h1>Faculty Member Biography</h1>
+        </header>
+
+        <section class="bio">
+            <div class="profile-pic">
+                <!-- Replace 'faculty-photo.jpg' with the actual path of the image -->
+                <img src="C:/Users/chall/OneDrive/Desktop/CYBER LEARN WEBSITE/123.jpeg" alt="Dr. Jane Doe" />
+            </div>
+            <div class="details">
+                <h2>Dr. Jane Doe</h2>
+                <h3>Professor of Computer Science</h3>
+                <p><strong>Biography:</strong> Dr. Jane Doe has over 15 years of experience in the field of computer science and specializes in artificial intelligence and machine learning. She has published numerous research papers and has been invited to speak at various international conferences.</p>
+
+                <p><strong>Educational Background:</strong> 
+                <ul>
+                    <li>PhD in Computer Science, University of Tech, 2008</li>
+                    <li>Master's in Computer Science, University of Tech, 2005</li>
+                    <li>Bachelor's in Information Technology, University of Tech, 2003</li>
+                </ul>
+                </p>
+
+                <p><strong>Email:</strong> <a href="mailto:jane.doe@example.com">jane.doe@example.com</a></p>
+                <p><strong>Office Hours:</strong> Monday - Friday, 10 AM - 12 PM</p>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2023 E-Learning Platform. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>

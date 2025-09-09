@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shiva Challa | iOS & App Developer</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet" />
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .scroll-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-300">
+
+    <header class="bg-slate-900/70 backdrop-blur-lg fixed top-0 left-0 right-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-white">Shiva Challa</a>
+            <ul class="hidden md:flex space-x-6 items-center">
+                <li><a href="#skills" class="hover:text-cyan-400 transition-colors">Skills</a></li>
+                <li><a href="#projects" class="hover:text-cyan-400 transition-colors">Projects</a></li>
+                <li><a href="#experience" class="hover:text-cyan-400 transition-colors">Experience</a></li>
+                <li><a href="#contact" class="bg-cyan-500 hover:bg-cyan-600 text-white font-medium py-2 px-4 rounded-lg transition-colors">Contact Me</a></li>
+            </ul>
+            <button id="mobile-menu-button" class="md:hidden text-2xl">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+             <a href="#skills" class="block py-2 hover:text-cyan-400">Skills</a>
+             <a href="#projects" class="block py-2 hover:text-cyan-400">Projects</a>
+             <a href="#experience" class="block py-2 hover:text-cyan-400">Experience</a>
+             <a href="#contact" class="block mt-2 bg-cyan-500 hover:bg-cyan-600 text-white font-medium py-2 px-4 rounded-lg text-center">Contact Me</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 pt-24">
+
+        <section id="home" class="min-h-[80vh] flex flex-col md:flex-row items-center justify-center text-center md:text-left">
+            <div class="md:w-3/5">
+                <h1 class="text-4xl md:text-6xl font-bold text-white leading-tight">
+                    Shiva Challa
+                </h1>
+                <p class="text-xl md:text-2xl text-cyan-400 font-medium mt-2">
+                    Aspiring iOS & Application Developer
+                </p>
+                <p class="mt-6 max-w-xl">
+                    A passionate electrical engineering student with proven problem-solving abilities honed through coursework in complex systems. Possesses a strong foundation in iOS development, including Swift, UIKit, and Xcode, and is eager to apply a logical and analytical approach to building mobile applications that are both functional and performant.
+                </p>
+                <div class="mt-8 flex justify-center md:justify-start space-x-5">
+                    <a href="mailto:shivachalla261@gmail.com" class="text-2xl hover:text-cyan-400 transition-colors"><i class="fa-solid fa-envelope"></i></a>
+                    <a href="https://www.linkedin.com/in/shiva-challa-b610e9273" target="_blank" class="text-2xl hover:text-cyan-400 transition-colors"><i class="fa-brands fa-linkedin"></i></a>
+                    <a href="https://github.com/your-github-username" target="_blank" class="text-2xl hover:text-cyan-400 transition-colors"><i class="fa-brands fa-github"></i></a>
+                </div>
+            </div>
+            </section>
+
+        <section id="skills" class="py-20 scroll-reveal">
+            <h2 class="text-3xl font-bold text-center text-white mb-12">Technical Skills</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 max-w-4xl mx-auto">
+                <div class="flex flex-col items-center p-4 bg-slate-800 rounded-lg"><span class="text-lg font-semibold">Swift</span><span class="text-sm text-cyan-400">Language</span></div>
+                <div class="flex flex-col items-center p-4 bg-slate-800 rounded-lg"><span class="text-lg font-semibold">Kotlin</span><span class="text-sm text-cyan-400">Language</span></div>
+                <div class="flex flex-col items-center p-4 bg-slate-800 rounded-lg"><span class="text-lg font-semibold">C++</span><span class="text-sm text-cyan-400">Language</span></div>
+                <div class="flex flex-col items-center p-4 bg-slate-800 rounded-lg"><span class="text-lg font-semibold">Python</span><span class="text-sm text-cyan-400">Language</span></div>
+                <div class="flex flex-col items-center p-4 bg-slate-800 rounded-lg"><span class="text-lg font-semibold">iOS SDK</span><span class="text-sm text-cyan-400">Framework</span></div>
+                <div class="flex flex-col items-center p-4 bg-slate-800 rounded-lg"><span class="text-lg font-semibold">UIKit</span><span class="text-sm text-cyan-400">Framework</span></div>
+                <div class="flex flex-col items-center p-4 bg-slate-800 rounded-lg"><span class="text-lg font-semibold">Core Data</span><span class="text-sm text-cyan-400">Database</span></div>
+                <div class="flex flex-col items-center p-4 bg-slate-800 rounded-lg"><span class="text-lg font-semibold">Firebase</span><span class="text-sm text-cyan-400">Backend</span></div>
+                <div class="flex flex-col items-center p-4 bg-slate-800 rounded-lg"><span class="text-lg font-semibold">REST APIs</span><span class="text-sm text-cyan-400">API</span></div>
+                <div class="flex flex-col items-center p-4 bg-slate-800 rounded-lg"><span class="text-lg font-semibold">Git</span><span class="text-sm text-cyan-400">Version Control</span></div>
+                <div class="flex flex-col items-center p-4 bg-slate-800 rounded-lg"><span class="text-lg font-semibold">Xcode</span><span class="text-sm text-cyan-400">IDE</span></div>
+            </div>
+        </section>
+
+        <section id="projects" class="py-20 scroll-reveal">
+            <h2 class="text-3xl font-bold text-center text-white mb-12">Projects</h2>
+            <div id="project-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                </div>
+        </section>
+        
+        <section id="experience" class="py-20 scroll-reveal">
+             <h2 class="text-3xl font-bold text-center text-white mb-12">Internship</h2>
+             <div class="max-w-3xl mx-auto bg-slate-800 p-8 rounded-lg shadow-lg">
+                 <div class="flex justify-between items-start">
+                     <div>
+                        <h3 class="text-xl font-bold text-white">Data Analytics Intern</h3>
+                        <p class="text-cyan-400">Working on Real World Applications.</p>
+                     </div>
+                     <span class="text-slate-400 text-sm">Nov 2024 – Dec 2024</span>
+                 </div>
+                 <ul class="mt-4 list-disc list-inside text-slate-300 space-y-2">
+                     <li>File/Data World preparation to support various content formats during sharing.</li>
+                     <li>Cleaning and updating data for analysis.</li>
+                     <li>Aggregating results into bar graphs and charts.</li>
+                 </ul>
+             </div>
+        </section>
+        
+        <section id="education" class="py-20 scroll-reveal">
+            <h2 class="text-3xl font-bold text-center text-white mb-12">Education & Certifications</h2>
+            <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-10">
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-4">Education</h3>
+                    <div class="space-y-6">
+                        <div class="bg-slate-800 p-4 rounded-lg">
+                            <p class="font-semibold text-white">Jawaharlal Nehru Technological University</p>
+                            <p>Electrical and Electronics Engineering - CGPA: 7.0</p>
+                            <p class="text-sm text-slate-400">2022 – 2026</p>
+                        </div>
+                        <div class="bg-slate-800 p-4 rounded-lg">
+                            <p class="font-semibold text-white">RRK Vahini junior college</p>
+                            <p>12th with MPC - Percentage: 90.6%</p>
+                            <p class="text-sm text-slate-400">2019 – 2021</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-4">Certifications</h3>
+                    <div class="space-y-6">
+                        <div class="bg-slate-800 p-4 rounded-lg">
+                            <p class="font-semibold text-white">Web Developer</p>
+                            <p class="text-cyan-400">Coursera Education</p>
+                            <p class="text-sm text-slate-400">April 2024</p>
+                        </div>
+                        <div class="bg-slate-800 p-4 rounded-lg">
+                            <p class="font-semibold text-white">Cloud Computing</p>
+                            <p class="text-cyan-400">Coursera Education</p>
+                            <p class="text-sm text-slate-400">April 2024</p>
+                        </div>
+                        <div class="bg-slate-800 p-4 rounded-lg">
+                            <p class="font-semibold text-white">Python Basics for Data Science</p>
+                            <p class="text-cyan-400">Coursera Education</p>
+                            <p class="text-sm text-slate-400">April 2024</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="contact" class="py-20 scroll-reveal text-center">
+             <h2 class="text-3xl font-bold text-white mb-4">Get In Touch</h2>
+             <p class="max-w-2xl mx-auto mb-8">
+                 I'm currently seeking new opportunities and my inbox is always open. Whether you have a question or just want to say hi, I'll get back to you!
+             </p>
+             <a href="mailto:shivachalla261@gmail.com" class="inline-block bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-3 px-8 rounded-lg transition-colors text-lg">
+                 Say Hello
+             </a>
+        </section>
+
+    </main>
+
+    <footer class="text-center py-6 border-t border-slate-700">
+        <p>Designed & Built by Shiva Challa</p>
+    </footer>
+
+    <div id="project-modal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 hidden z-50">
+        <div id="modal-content" class="bg-slate-800 rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto p-8 relative">
+            <button id="close-modal-button" class="absolute top-4 right-4 text-2xl text-slate-400 hover:text-white">&times;</button>
+            </div>
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-swift.min.js"></script>
+    <script src="assets/js/script.js">document.addEventListener('DOMContentLoaded', () => {
+
+    // --- PROJECT DATA ---
+    // Store your project data in an array of objects. This makes it easy to update.
+    const projects = [
+        {
+            title: 'Workout Tracker App',
+            image: 'assets/images/project-workout-tracker.png', // Add a relevant image
+            description: 'A native iOS app to track and visualize workout routines and user progress, featuring timers and data persistence.',
+            tags: ['Swift', 'Core Data', 'UIKit', 'Realm'],
+            details: [
+                'Utilized local data persistence (Core Data / Realm) to store workout routines and user progress.',
+                'Integrated timers and countdowns for guided workout sessions.',
+                'Built progress tracking and data visualization features for user motivation.',
+                'Implemented Location Services API to fetch and display real-time user location.',
+                'Handled permission for seamless and secure user access.',
+                'Used map APIs to plot routes and highlight points of interest.'
+            ],
+            code: `// Example: Saving a workout session with Core Data
+import CoreData
+
+func saveWorkout(name: String, duration: TimeInterval) {
+    let context = persistentContainer.viewContext
+    let newWorkout = Workout(context: context)
+    newWorkout.name = name
+    newWorkout.duration = duration
+    newWorkout.date = Date()
+    
+    do {
+        try context.save()
+        print("Workout saved successfully!")
+    } catch {
+        print("Failed to save workout: \\(error)")
+    }
+}`,
+            github: 'https://github.com/your-username/workout-tracker', // Add your repo link
+            liveDemo: null // Add link if you have a live demo
+        },
+        {
+            title: 'WhatsApp Clone',
+            image: 'assets/images/project-whatsapp-clone.png',
+            description: 'A real-time messaging application with secure user authentication and cloud-based data storage.',
+            tags: ['Swift', 'Firebase', 'UIKit'],
+            details: [
+                'Built a real-time messaging system using Firebase Firestore.',
+                'Implemented secure user authentication for login and registration.',
+                'Designed an intuitive UI/UX featuring chat bubbles, user profiles, and contact lists.',
+                'Managed cloud-based data storage and retrieval for chats and user data.'
+            ],
+            code: `// Example: Fetching messages from Firebase
+import FirebaseFirestore
+
+func fetchMessages(for chatID: String) {
+    db.collection("chats").document(chatID).collection("messages")
+      .order(by: "timestamp")
+      .addSnapshotListener { querySnapshot, error in
+          guard let documents = querySnapshot?.documents else {
+              print("Error fetching documents: \\(error!)")
+              return
+          }
+          
+          self.messages = documents.map { doc in
+              return Message(data: doc.data())
+          }
+      }
+}`,
+            github: 'https://github.com/your-username/whatsapp-clone',
+            liveDemo: null
+        },
+        // --- ADD MORE PROJECTS HERE following the same structure ---
+        {
+            title: 'Temperature Converter App',
+            image: 'assets/images/project-temp-converter.png',
+            description: 'A clean and intuitive iOS app for converting temperatures between Celsius and Fahrenheit.',
+            tags: ['Swift', 'UIKit', 'Conditional Logic'],
+            details: [
+                'Developed a clean and intuitive UI for input handling and output display.',
+                'Implemented conversion logic between Celsius and Fahrenheit with conditional statements for unit selection.',
+                'Designed a grid-based, responsive UI for a full-featured calculator.',
+                'Handled user input through event-driven programming to support basic and multi-step calculations.',
+                'Managed application state to ensure accurate computational flow.'
+            ],
+            code: `// Core conversion logic in Swift
+func convertTemperature(value: Double, from unit: Unit) -> Double {
+    if unit == .celsius {
+        // Convert from Celsius to Fahrenheit
+        return (value * 9/5) + 32
+    } else {
+        // Convert from Fahrenheit to Celsius
+        return (value - 32) * 5/9
+    }
+}
+`,
+            github: 'https://github.com/your-username/temp-converter',
+            liveDemo: null
+        }
+    ];
+
+    const projectGrid = document.getElementById('project-grid');
+    const modal = document.getElementById('project-modal');
+    const modalContent = document.getElementById('modal-content');
+    const closeModalButton = document.getElementById('close-modal-button');
+
+    // --- DYNAMICALLY CREATE PROJECT CARDS ---
+    projects.forEach(project => {
+        const card = document.createElement('div');
+        card.className = 'bg-slate-800 rounded-lg overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300 cursor-pointer';
+        card.innerHTML = `
+            <div class="p-6">
+                <h3 class="text-xl font-bold text-white mb-2">${project.title}</h3>
+                <p class="text-slate-400 mb-4">${project.description}</p>
+                <div class="flex flex-wrap gap-2">
+                    ${project.tags.map(tag => `<span class="bg-cyan-900/50 text-cyan-300 text-xs font-semibold px-2.5 py-1 rounded-full">${tag}</span>`).join('')}
+                </div>
+            </div>
+        `;
+        card.addEventListener('click', () => openModal(project));
+        projectGrid.appendChild(card);
+    });
+
+    // --- MODAL FUNCTIONALITY ---
+    function openModal(project) {
+        modalContent.innerHTML = `
+            <button id="close-modal-button-inner" class="absolute top-4 right-4 text-2xl text-slate-400 hover:text-white">&times;</button>
+            <h2 class="text-3xl font-bold text-white mb-4">${project.title}</h2>
+            <div class="flex flex-wrap gap-2 mb-6">
+                ${project.tags.map(tag => `<span class="bg-cyan-900/50 text-cyan-300 text-xs font-semibold px-2.5 py-1 rounded-full">${tag}</span>`).join('')}
+            </div>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-2">Key Features</h4>
+                    <ul class="list-disc list-inside space-y-2 text-slate-300">
+                        ${project.details.map(detail => `<li>${detail}</li>`).join('')}
+                    </ul>
+                    <div class="mt-6 flex space-x-4">
+                        ${project.github ? `<a href="${project.github}" target="_blank" class="bg-slate-700 hover:bg-slate-600 text-white font-medium py-2 px-4 rounded-lg transition-colors"><i class="fa-brands fa-github mr-2"></i>View Code</a>` : ''}
+                        ${project.liveDemo ? `<a href="${project.liveDemo}" target="_blank" class="bg-cyan-500 hover:bg-cyan-600 text-white font-medium py-2 px-4 rounded-lg transition-colors">Live Demo</a>` : ''}
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-2">Code Snippet</h4>
+                    <pre><code class="language-swift">${Prism.highlight(project.code, Prism.languages.swift, 'swift')}</code></pre>
+                </div>
+            </div>
+        `;
+        modal.classList.remove('hidden');
+        document.getElementById('close-modal-button-inner').addEventListener('click', closeModal);
+    }
+
+    function closeModal() {
+        modal.classList.add('hidden');
+    }
+
+    closeModalButton.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+
+    // --- MOBILE MENU ---
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+    
+    // --- SCROLL REVEAL ANIMATION ---
+    const revealElements = document.querySelectorAll('.scroll-reveal');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, {
+        threshold: 0.1
+    });
+
+    revealElements.forEach(el => {
+        observer.observe(el);
+    });
+
+});</script>
+</body>
+</html>

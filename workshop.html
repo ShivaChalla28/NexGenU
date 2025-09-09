@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Workshop Registration</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 3rem;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+
+        .back-button, .next-button {
+            position: absolute;
+            top: 20px;
+            padding: 10px;
+            background-color: rgba(68, 206, 17, 0.5);
+            color: rgb(201, 18, 40);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+            z-index: 10;
+        }
+    
+        .back-button {
+            left: 20px;
+        }
+    
+        .next-button {
+            right: 20px;
+        }
+    
+        .back-button:hover, .next-button:hover {
+            background-color: rgba(250, 52, 2, 0.7);
+        }
+
+        .workshop-list {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            padding: 2rem;
+        }
+
+        .workshop {
+            background-color: #fff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin: 1rem;
+            border-radius: 8px;
+            width: 30%;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .workshop:hover {
+            transform: scale(1.05);
+        }
+
+        .workshop h2 {
+            color: #007bff;
+        }
+
+        .workshop p {
+            font-size: 1rem;
+            color: #666;
+        }
+
+        .register-btn {
+            background-color: #28a745;
+            color: white;
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 15px;
+            transition: background-color 0.3s;
+        }
+
+        .register-btn:hover {
+            background-color: #218838;
+        }
+
+        .registration-form {
+            background-color: #fff;
+            padding: 2rem;
+            max-width: 500px;
+            margin: 2rem auto;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .registration-form h2 {
+            text-align: center;
+            color: #007bff;
+        }
+
+        .registration-form label {
+            font-weight: 500;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .registration-form input,
+        .registration-form select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+        }
+
+        .submit-btn {
+            background-color: #007bff;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .confirmation-message {
+            margin-top: 1rem;
+            color: #28a745;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        footer {
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        #quiz-button {
+            position: absolute;
+            top: 20px;  /* Vertical position */
+            right: 20px;  /* Horizontal position */
+            background-color: #4CAF50; /* Green background */
+            color: white; /* White text */
+            border: none; /* Remove border */
+            padding: 10px 15px; /* Padding for aesthetics */
+            cursor: pointer; /* Pointer cursor on hover */
+            font-size: 16px; /* Font size */
+            z-index: 1000; /* Ensure it stays on top */
+        }
+
+        #college {
+            background-color: #4CAF50; /* Green background */
+            color: white; /* White text */
+            border: none; /* Remove border */
+            padding: 10px 15px; /* Padding for aesthetics */
+            cursor: pointer; /* Pointer cursor on hover */
+            font-size: 16px; /* Font size */
+        }
+        
+    </style>
+</head>
+<body>
+    <button class="back-button"><a href="weh.html">Back</a></button>
+
+    <!-- Quiz Button -->
+    <button id="quiz-button"><a href="https://forms.gle/PTjM3FG2uZwbnir2A"></a>QUIZ</a></button>
+
+    <header class="header">
+        <h1>Workshops for 2024</h1>
+        <p>Register for your favorite workshop and enhance your skills!</p>
+        <h2><button id="college"><><center-left><a href="https://forms.gle/B3avxv53s6PLoe2j7">COLLEGE REGISTER</a></center-left></button></h2>
+        <button class="back-button"><a href="weh.html">Back</a></button>
+    </header>
+
+    <section class="workshop-list">
+        <!-- Workshops List -->
+        <div class="workshop">
+            <h2>Data Base Management</h2>
+            <p>Learn how to manage databases, SQL, and NoSQL technologies.</p>
+            <p><strong>Duration:</strong> 4 Days</p>
+            <button ><a href="https://forms.gle/TpaLgvXNZonFeyez8">Register Now</a></button>
+        </div>
+
+        <div class="workshop">
+            <h2>Networking</h2>
+            <p>Understand the fundamentals of networking, routers, switches, and protocols.</p>
+            <p><strong>Duration:</strong> 5 Days</p>
+            <button ><a href="https://forms.gle/Emq9aBYyjk7dhPSQ9">Register Now</a></button>
+        </div>
+
+        <div class="workshop">
+            <h2>DevOps and Testing</h2>
+            <p>Learn the principles of DevOps, continuous integration, and automated testing.</p>
+            <p><strong>Duration:</strong> 6 Days</p>
+            <button ><a href="https://forms.gle/SQkQG13ZXfjh5vAS7">Register Now</a></button>
+        </div>
+
+        <div class="workshop">
+            <h2>Blockchain Development</h2>
+            <p>Explore blockchain technology, smart contracts, and decentralized apps.</p>
+            <p><strong>Duration:</strong> 5 Days</p>
+            <button ><a href="https://forms.gle/yjStzSdffiyVBnVy8">Register Now</a></button>
+        </div>
+
+        <div class="workshop">
+            <h2>Web Development</h2>
+            <p>Learn the basics of web development, including HTML, CSS, JavaScript, and more.</p>
+            <p><strong>Duration:</strong> 7 Days</p>
+            <button ><a href="https://forms.gle/bmDSgxnbpddtt3qD7">Register Now</a></button>
+        </div>
+
+        <div class="workshop">
+            <h2>Data Science and Analytics</h2>
+            <p>Master data analysis, visualization, and machine learning concepts.</p>
+            <p><strong>Duration:</strong> 7 Days</p>
+            <button ><a href="https://forms.gle/rr7uphnJ1NgEmfac7">Register Now</a></button>
+        </div>
+
+        <div class="workshop">
+            <h2>Artificial Intelligence</h2>
+            <p>Learn AI concepts including neural networks, deep learning, and machine learning.</p>
+            <p><strong>Duration:</strong> 6 Days</p>
+            <button ><a href="https://forms.gle/Aj1S3Res4Zx5E4R96">Register Now</a></button>
+        </div>
+
+        <div class="workshop">
+            <h2>Cyber Security</h2>
+            <p>Learn about ethical hacking, network security, and how to defend against cyber attacks.</p>
+            <p><strong>Duration:</strong> 5 Days</p>
+            <button ><a href="https://forms.gle/tG8rb4jRQAM9r75M6">Register Now</a></button>
+        </div>
+
+        <div class="workshop">
+            <h2>Software Development</h2>
+            <p>Learn how to design and build software applications using various programming languages.</p>
+            <p><strong>Duration:</strong> 6 Days</p>
+            <button ><a href="https://forms.gle/FV9LCHMEjdhZyVfR7">Register Now</a></button>
+        </div>
+
+        <div class="workshop">
+            <h2>Cloud Architecture</h2>
+            <p>Master cloud infrastructure, cloud deployment models, and cloud security.</p>
+            <p><strong>Duration:</strong> 5 Days</p>
+            <button ><a href="https://forms.gle/GP8aWj5YoQJ4XZ7V7">Register Now</a></button>
+        </div>
+
+        <div class="workshop">
+            <h2>SAP</h2>
+            <p>Learn SAP software and its applications in business processes and analytics.</p>
+            <p><strong>Duration:</strong> 6 Days</p>
+            <button ><a href="https://forms.gle/jcAjwDcZyVNFM3Yt8">Register Now</a></button>
+        </div>
+
+        <div class="workshop">
+            <h2>Ethical Hacking</h2>
+            <p>Learn ethical hacking techniques and how to secure networks and systems.</p>
+            <p><strong>Duration:</strong> 6 Days</p>
+            <button ><a href="https://forms.gle/25PJv3Cbm6TnKPB58">Register Now</a></button>
+        </div>
+
+        <div class="workshop">
+            <h2>QA Automation Engineer</h2>
+            <p>Master automated testing strategies and tools for software quality assurance.</p>
+            <p><strong>Duration:</strong> 5 Days</p>
+            <button ><a href="https://forms.gle/fbtU1rHTuPrYvSSX7">Register Now</a></button>
+        </div>
+
+        <div class="workshop">
+            <h2>UI/UX Designer</h2>
+            <p>Learn how to design intuitive user interfaces and create a seamless user experience.</p>
+            <p><strong>Duration:</strong> 5 Days</p>
+            <button ><a href="https://forms.gle/6189Z74vwhTDaFvs8">Register Now</a></button>
+        </div>
+
+        <div class="workshop">
+            <h2>AI Engineer</h2>
+            <p>Understand the fundamentals of AI development and build AI-powered solutions.</p>
+            <p><strong>Duration:</strong> 6 Days</p>
+            <button ><a href="https://forms.gle/V5HKBkGpC4NfmuaH8">Register Now</a></button>
+        </div>
+
+        <div class="workshop">
+            <h2>AWS</h2>
+            <p>Learn how to use Amazon Web Services to build scalable cloud applications.</p>
+            <p><strong>Duration:</strong> 5 Days</p>
+            <button ><a href="https://forms.gle/EH2cVZtKC1o5EVPM7">Register Now</a></button>
+        </div>
+
+        <div class="workshop">
+            <h2>Embedded System</h2>
+            <p>Explore embedded system design, development, and programming.</p>
+            <p><strong>Duration:</strong> 5 Days</p>
+            <button ><a href="https://forms.gle/cWbXu9wmoFsHYWTf6">Register Now</a></button>
+        </div>
+
+        <div class="workshop">
+            <h2>AutoCAD</h2>
+            <p>Learn to create professional 2D and 3D designs using AutoCAD software.</p>
+            <p><strong>Duration:</strong> 7 Days</p>
+            <button ><a href="https://forms.gle/pXvZhxSudCYRXYGp8">Register Now</a></button>
+        </div>
+
+        <div class="workshop">
+            <h2>Business Development</h2>
+            <p>Learn strategies for business growth, sales, and market expansion.</p>
+            <p><strong>Duration:</strong> 5 Days</p>
+            <button ><a href="https://forms.gle/46GBPcFMNFNjfUmk6">Register Now</a></button>
+        </div>
+        <div class="workshop">
+            <h2>Interview Preparation</h2>
+            <p>Learn strategies for business growth, sales, and market expansion.</p>
+            <p><strong>Duration:</strong> 5 Days</p>
+            <button ><a href="https://forms.gle/pFzkj8zHHpLntKQ87">Register Now</a></button>
+        </div>
+    </section>
+
+    <script>
+        // Function to handle registration form submission
+        document.getElementById("registrationForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const workshop = document.getElementById("workshop").value;
+
+            const confirmationMessage = document.getElementById("confirmation");
+            confirmationMessage.innerHTML = `Thank you, ${name}! You have successfully registered for the ${workshop} workshop. A confirmation email has been sent to ${email}.`;
+
+            // Clear form after submission
+            document.getElementById("registrationForm").reset();
+        });
+    </script>
+</body>
+</html>
