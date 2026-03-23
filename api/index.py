@@ -1,20 +1,22 @@
 import sys
 import os
-from io import BytesIO
 
-# Add parent directory to path
+# Add parent directory to path for imports
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+# Set environment variable for Vercel
+os.environ['VERCEL'] = 'true'
 
 try:
     from app import app
 except Exception as e:
-    # Return error response if app fails to import
-    def app(environ, start_response):
-        status = '500 Internal Server Error'
-        headers = [('Content-Type', 'text/plain')]
-        start_response(status, headers)
-        return [f'Error importing app: {str(e)}'.encode()]
+    print(f"Error importing app: {e}")
+    from flask import Flask, jsonify
+    app = Flask(__name__)
+    
+    @app.route('/')
+    def error_handler():
+        return jsonify({'error': 'Failed to import main app', 'message': str(e)}), 500
 
-
-# WSGI app for Vercel
+# Export the Flask WSGI application
 application = app
