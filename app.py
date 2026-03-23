@@ -11,7 +11,14 @@ from models import User, Profile, Course, Enrollment, Exam, ExamScore, Job, Inte
 app = Flask(__name__)
 app.config.from_object(Config)
 
-db.init_app(app)
+# Disable database initialization on Vercel
+if os.environ.get('VERCEL'):
+    app.config['SQLALCHEMY_DATABASE_URI'] = None
+
+try:
+    db.init_app(app)
+except Exception as e:
+    print(f"Database initialization error: {e}")
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -19,25 +26,45 @@ login_manager.login_view = 'auth.login'
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
+    try:
+        return User.query.get(int(user_id))
+    except Exception as e:
+        print(f"Error loading user: {e}")
+        return None
 
 # Import routes
-from routes.auth import auth
-from routes.student import student_bp
-from routes.parent import parent_bp
-from routes.college import college_bp
+try:
+    from routes.auth import auth
+    from routes.student import student_bp
+    from routes.parent import parent_bp
+    from routes.college import college_bp
 
-app.register_blueprint(auth, url_prefix='/auth')
-app.register_blueprint(student_bp, url_prefix='/student')
-app.register_blueprint(parent_bp, url_prefix='/parent')
-app.register_blueprint(college_bp, url_prefix='/college')
+    app.register_blueprint(auth, url_prefix='/auth')
+    app.register_blueprint(student_bp, url_prefix='/student')
+    app.register_blueprint(parent_bp, url_prefix='/parent')
+    app.register_blueprint(college_bp, url_prefix='/college')
+except Exception as e:
+    print(f"Error importing routes: {e}")
+
+# Simple health check endpoint that doesn't require database
+@app.route('/api/health', methods=['GET'])
+def health_check():
+    return jsonify({
+        'status': 'healthy',
+        'service': 'NexGenU',
+        'message': 'Application is running'
+    }), 200
 
 @app.route('/')
 def home():
-    # Get dynamic stats
-    student_count = User.query.filter_by(role='student').count()
-    college_count = User.query.filter_by(role='college').count()
-    return render_template('home.html', student_count=student_count, college_count=college_count)
+    try:
+        # Get dynamic stats
+        student_count = User.query.filter_by(role='student').count()
+        college_count = User.query.filter_by(role='college').count()
+        return render_template('home.html', student_count=student_count, college_count=college_count)
+    except Exception as e:
+        print(f"Error in home route: {e}")
+        return jsonify({'error': 'Error loading home page', 'message': str(e)}), 500
 
 @app.route('/health')
 def health():
