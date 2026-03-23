@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - NEXGENU</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+<body>
+    <div class="container">
+        <div class="glass-card hero">
+            <h2>Welcome Back</h2>
+            <p>Login to your NEXGENU account</p>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form method="post" class="glass-form" id="login-form">
+                <div class="form-group">
+                    <label for="role">Login as</label>
+                    <select id="role" name="role" class="glass-input" style="padding: 10px;">
+                        <option value="student">Student</option>
+                        <option value="parent">Parent</option>
+                        <option value="college">College</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required class="glass-input" placeholder="your.email@example.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div style="position: relative; width: 100%;">
+                        <input type="password" id="password" name="password" required class="glass-input" placeholder="Your password" style="padding-right: 90px;">
+                        <button type="button" id="togglePassword" style="position:absolute; right:8px; top:50%; transform: translateY(-50%); border:none; background: none; color:#666; cursor: pointer; font-weight:700;">Show</button>
+                    </div>
+                </div>
+
+                <button type="submit" class="neon-btn">Login</button>
+            </form>
+
+            <div class="mt-2" style="color:#bbb; font-size:0.9rem;">Tip: select type before login to reach proper dashboard quickly.</div>
+
+            <div class="mt-4">
+                <a href="{{ url_for('auth.register') }}" class="glass-link">Don't have an account? Register</a>
+            </div>
+
+            <div class="mt-4">
+                <a href="{{ url_for('auth.register') }}" class="glass-link">Don't have an account? Register</a>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a1a40, #181838 40%, #0f0f2a);
+            color: #eee;
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 540px;
+            padding: 24px;
+            box-sizing: border-box;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 18px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+        }
+
+        .glass-card h2 {
+            margin: 0 0 10px;
+            color: #fff;
+        }
+
+        .glass-card p {
+            margin: 0 0 20px;
+            color: #d7e2ff;
+            opacity: 0.9;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .glass-input {
+            width: 100%;
+            padding: 12px 14px;
+            margin-top: 6px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            background: rgba(20, 20, 80, 0.65);
+            color: #fff;
+            font-size: 0.95rem;
+        }
+
+        .glass-input:focus {
+            outline: none;
+            border-color: #5a7cff;
+            box-shadow: 0 0 0 3px rgba(90, 124, 255, 0.25);
+            background: rgba(25, 32, 80, 0.9);
+        }
+
+        .neon-btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #6f7dff, #e55ed3);
+            color: #fff;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(109, 117, 255, 0.6);
+            transition: transform 0.15s ease, opacity 0.15s ease;
+        }
+
+        .neon-btn:hover {
+            transform: translateY(-1px);
+            opacity: 0.96;
+        }
+
+        .glass-link {
+            color: #b7cbff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .alert {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .alert-success {
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid rgba(0, 255, 0, 0.3);
+            color: #adffad;
+        }
+
+        .alert-error {
+            background: rgba(255, 0, 0, 0.15);
+            border: 1px solid rgba(255, 0, 0, 0.32);
+            color: #ffb4b4;
+        }
+
+        .alert-info {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            color: #a5d4ff;
+        }
+
+        .mt-2 {
+            margin-top: 12px;
+        }
+
+        .mt-4 {
+            margin-top: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .glass-card {
+                padding: 18px;
+            }
+
+            .form-group {
+                margin-bottom: 12px;
+            }
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const pwd = document.getElementById('password');
+            const toggle = document.getElementById('togglePassword');
+            if (toggle && pwd) {
+                toggle.addEventListener('click', function() {
+                    if (pwd.type === 'password') {
+                        pwd.type = 'text';
+                        toggle.textContent = 'Hide';
+                    } else {
+                        pwd.type = 'password';
+                        toggle.textContent = 'Show';
+                    }
+                });
+            }
+
+            const role = document.getElementById('role');
+            if (role) {
+                role.addEventListener('change', function() {
+                    const selected = role.value;
+                    const roleMessage = document.getElementById('role-message');
+                    if (roleMessage) {
+                        roleMessage.textContent = `Selected role: ${selected}.`; 
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

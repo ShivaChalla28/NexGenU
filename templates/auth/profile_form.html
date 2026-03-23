@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>NEXGENU</h2>
+    <a href="/dashboard">Dashboard</a>
+    <a href="/projects">Projects</a>
+    <a href="/exams">Competitive Exams</a>
+    <a href="/startup">Startup Ideas</a>
+    <a href="/govt-jobs">Govt Jobs</a>
+    <a href="/certificates">Certificates</a>
+    <a href="/profile">Profile</a>
+    <a href="/logout">Logout</a>
+</div>
+
+<div class="glass-card">
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="flash-messages">
+        {% for message in messages %}
+        <div class="flash-message success">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+    
+    <h2>{% if profile %}Edit Your Profile{% else %}Complete Your Profile{% endif %}</h2>
+
+    <form method="post">
+        <div class="form-group">
+            <label for="branch">Branch *</label>
+            <input type="text" name="branch" id="branch" placeholder="e.g., CSE, ECE, Mechanical" value="{{ profile.branch if profile else '' }}" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="college">College Name *</label>
+            <input type="text" name="college" id="college" placeholder="Your College Name" value="{{ profile.college if profile else '' }}" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="behavior">Academic Performance</label>
+            <select name="behavior" id="behavior">
+                <option value="">Select Performance</option>
+                <option value="Excellent" {% if profile and profile.behavior == 'Excellent' %}selected{% endif %}>Excellent</option>
+                <option value="Good" {% if profile and profile.behavior == 'Good' %}selected{% endif %}>Good</option>
+                <option value="Average" {% if profile and profile.behavior == 'Average' %}selected{% endif %}>Average</option>
+                <option value="Needs Improvement" {% if profile and profile.behavior == 'Needs Improvement' %}selected{% endif %}>Needs Improvement</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="mentor_name">Mentor Name</label>
+            <input type="text" name="mentor_name" id="mentor_name" placeholder="Your Mentor Name" value="{{ profile.mentor_name if profile else '' }}">
+        </div>
+        
+        <div class="form-group">
+            <label for="mentor_email">Mentor Email</label>
+            <input type="email" name="mentor_email" id="mentor_email" placeholder="mentor@example.com" value="{{ profile.mentor_email if profile else '' }}">
+        </div>
+        
+        <div class="form-group">
+            <label for="mentor_phone">Mentor Phone</label>
+            <input type="tel" name="mentor_phone" id="mentor_phone" placeholder="+91-XXXXXXXXXX" value="{{ profile.mentor_phone if profile else '' }}">
+        </div>
+        
+        <button class="neon-btn full">{% if profile %}Update Profile{% else %}Save Profile{% endif %}</button>
+    </form>
+    
+    {% if profile %}
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="/profile" class="neon-btn" style="background: rgba(255,255,255,0.1);">Cancel</a>
+    </div>
+    {% endif %}
+</div>
+
+<style>
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    color: #00fff0;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.form-group input, .form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid rgba(0,255,240,0.3);
+    border-radius: 8px;
+    background: rgba(255,255,255,0.05);
+    color: white;
+    font-size: 16px;
+}
+
+.form-group input:focus, .form-group select:focus {
+    outline: none;
+    border-color: #00fff0;
+    box-shadow: 0 0 10px rgba(0,255,240,0.5);
+}
+
+.form-group input::placeholder {
+    color: rgba(255,255,255,0.6);
+}
+
+.flash-messages {
+    margin-bottom: 20px;
+}
+
+.flash-message {
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.flash-message.success {
+    background: rgba(0, 255, 136, 0.2);
+    border: 1px solid #00ff88;
+    color: #00ff88;
+}
+</style>
+
+</body>
+</html>

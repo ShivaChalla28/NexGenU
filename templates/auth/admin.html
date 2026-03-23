@@ -1,0 +1,7 @@
+<div class="glass-card hero">
+    <h2>Admin Dashboard</h2>
+    <h3>Students</h3>
+    {% for s in students %}
+        <p>{{ s.name }} - Score: {{ s.score }}</p>
+    {% endfor %}
+</div>

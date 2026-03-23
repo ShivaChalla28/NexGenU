@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parent Profile - NEXGENU</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body style="background: #f5f7fa; font-family: 'Poppins', sans-serif; padding: 20px;">
+    <div class="dashboard-wrapper" style="max-width: 900px; margin: auto;">
+        <div class="card" style="padding: 30px;">
+            <h1 style="margin-bottom: 20px;">Parent Profile</h1>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div style="margin-bottom: 10px; padding: 10px; border-radius: 8px; {% if category == 'error' %}background: #ffe8e8; border: 1px solid #f5c2c2; color: #a33;{% else %}background: #e8ffeb; border: 1px solid #b8f2c9; color: #2d7e43;{% endif %}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form method="post" action="{{ url_for('parent_bp.profile') }}" style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px;">
+                <div>
+                    <label style="font-weight: 600;">Name</label>
+                    <input type="text" name="name" value="{{ parent.name }}" required style="width: 100%; padding: 10px; margin-top: 6px; border-radius: 8px; border: 1px solid #ccc;" />
+                </div>
+                <div>
+                    <label style="font-weight: 600;">Email</label>
+                    <input type="email" name="email" value="{{ parent.email }}" required style="width: 100%; padding: 10px; margin-top: 6px; border-radius: 8px; border: 1px solid #ccc;" />
+                </div>
+
+                <div>
+                    <label style="font-weight: 600;">Mobile Number</label>
+                    <input type="text" name="mobile_number" value="{{ profile.mobile_number if profile else '' }}" placeholder="Optional" style="width: 100%; padding: 10px; margin-top: 6px; border-radius: 8px; border: 1px solid #ccc;" />
+                </div>
+                <div>
+                    <label style="font-weight: 600;">State</label>
+                    <input type="text" name="state" value="{{ profile.state if profile else '' }}" placeholder="Optional" style="width: 100%; padding: 10px; margin-top: 6px; border-radius: 8px; border: 1px solid #ccc;" />
+                </div>
+
+                <div>
+                    <label style="font-weight: 600;">Children Linked</label>
+                    <textarea readonly style="width: 100%; min-height: 100px; margin-top: 6px; padding: 10px; border-radius: 8px; border: 1px solid #ccc;">{%- for child in children %}{{ child.name }} ({{ child.unique_id }})\n{%- endfor %}</textarea>
+                </div>
+
+                <div>
+                    <label style="font-weight: 600;">Add Child Unique ID</label>
+                    <input type="text" name="child_unique_id" placeholder="241001CSE001NEXG" style="width: 100%; padding: 10px; margin-top: 6px; border-radius: 8px; border: 1px solid #ccc;" />
+                </div>
+
+                <div style="grid-column: span 2; display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+                    <button type="submit" style="background: #f5576c; color: white; border: none; padding: 12px 20px; border-radius: 8px; font-weight: 700; cursor: pointer;">Update Profile</button>
+                    <a href="{{ url_for('parent_bp.dashboard') }}" style="color: #f5576c; text-decoration: none; font-weight: 600;">Back to Dashboard</a>
+                </div>
+            </form>
+
+            <div style="margin-top: 25px;">
+                <p style="color: #555; font-size: 0.95rem;">To link another child, use the "Add Child Unique ID" field and then go back to Dashboard to view progress data.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate Detail - NEXGENU</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        body{font-family:'Poppins',sans-serif;background:#f0f2f8;padding:20px;}
+        .card{max-width:800px;margin:0 auto;background:white;border-radius:12px;padding:24px;box-shadow:0 10px 30px rgba(0,0,0,0.08);}
+        .title{font-size:2rem;margin-bottom:16px;color:#2d3b65;}
+        .info{margin-bottom:12px;color:#344767;}
+        .info strong{font-weight:700;}
+        .back-link{display:inline-block;margin-bottom:16px;color:#4c6ffc;text-decoration:none;font-weight:600;}
+        .back-link:hover{text-decoration:underline;}
+    </style>
+</head>
+<body>
+    <div class="card">
+        <a class="back-link" href="{{ url_for('student_bp.certificates') }}">← Back to Certificates</a>
+        <div class="title">{{ certificate.title }}</div>
+        <div class="info"><strong>User:</strong> {{ certificate.user.name }} ({{ certificate.user.unique_id }})</div>
+        <div class="info"><strong>Course:</strong> {{ certificate.course.name if certificate.course else 'N/A' }}</div>
+        <div class="info"><strong>Issued At:</strong> {{ certificate.issued_at.strftime('%Y-%m-%d') if certificate.issued_at else 'N/A' }}</div>
+        <div class="info"><strong>Certificate ID:</strong> {{ certificate.id }}</div>
+    </div>
+</body>
+</html>

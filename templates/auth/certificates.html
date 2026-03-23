@@ -1,0 +1,30 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+<div class="sidebar">
+    <h2>NEXGENU</h2>
+    <a href="/dashboard">Dashboard</a>
+    <a href="/projects">Projects</a>
+    <a href="/exams">Competitive Exams</a>
+    <a href="/startup">Startup Ideas</a>
+    <a href="/govt-jobs">Govt Jobs</a>
+    <a href="/certificates">Certificates</a>
+    <a href="/profile">Profile</a>
+    <a href="/logout">Logout</a>
+</div>
+
+<div class="main">
+    <div class="glass-card">
+        <h2>Certificates</h2>
+        {% if certificates %}
+        <ul>
+        {% for cert in certificates %}
+            <li>{{ cert.title }}</li>
+        {% endfor %}
+        </ul>
+        {% else %}
+        <p>No certificates yet.</p>
+        {% endif %}
+        <p>Request certificates for completed courses.</p>
+        <button class="neon-btn">Request Certificate</button>
+    </div>
+</div>

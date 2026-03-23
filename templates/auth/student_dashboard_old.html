@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - NEXGENU</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .student-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-top: 40px;
+        }
+        .metric-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+        .metric-number {
+            font-size: 48px;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+        .metric-label {
+            color: #666;
+            font-size: 14px;
+        }
+        .action-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        .action-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.15);
+        }
+        .action-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+        .action-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="glass-card" style="position: fixed; top: 0; left: 0; right: 0; z-index: 1000; margin: 1rem; border-radius: 50px;">
+        <div class="container flex justify-between items-center" style="padding: 0.75rem 1.5rem;">
+            <div class="flex items-center gap-4">
+                <h2 style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-size: 1.5rem; font-weight: 800;">
+                    NEXGENU
+                </h2>
+                <span style="color: #666; font-size: 14px;">Student Portal</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <span>Welcome, {{ current_user.name }}</span>
+                <a href="{{ url_for('auth.logout') }}" class="btn btn-secondary btn-sm">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <section class="student-header" style="margin-top: 80px;">
+        <div class="container">
+            <h1 style="font-size: 3rem; margin-bottom: 16px;">Student Dashboard</h1>
+            <p style="font-size: 1.2rem; opacity: 0.9;">Track your progress and unlock your potential</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section style="padding: 40px 0;">
+        <div class="container">
+            <!-- Metrics -->
+            <div class="dashboard-grid">
+                <div class="metric-card">
+                    <div class="metric-number">{{ current_user.score or 0 }}</div>
+                    <div class="metric-label">Total Score</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">{{ enrollments | length }}</div>
+                    <div class="metric-label">Enrolled Courses</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">{{ exam_scores | length }}</div>
+                    <div class="metric-label">Exams Completed</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">{{ applications | length }}</div>
+                    <div class="metric-label">Job Applications</div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="dashboard-grid" style="margin-top: 40px;">
+                <div class="action-card">
+                    <div class="action-icon">📚</div>
+                    <h3 style="margin-bottom: 16px;">My Courses</h3>
+                    <p style="color: #666; margin-bottom: 24px;">Access enrolled courses, view materials, and track progress.</p>
+                    <a href="{{ url_for('student_bp.courses') }}" class="action-btn">View Courses</a>
+                </div>
+
+                <div class="action-card">
+                    <div class="action-icon">📝</div>
+                    <h3 style="margin-bottom: 16px;">Take Exams</h3>
+                    <p style="color: #666; margin-bottom: 24px;">Participate in assessments and improve your knowledge.</p>
+                    <a href="{{ url_for('student_bp.exams') }}" class="action-btn">Start Exam</a>
+                </div>
+
+                <div class="action-card">
+                    <div class="action-icon">💼</div>
+                    <h3 style="margin-bottom: 16px;">Internships</h3>
+                    <p style="color: #666; margin-bottom: 24px;">Find and apply for internship opportunities.</p>
+                    <a href="{{ url_for('student_bp.internships') }}" class="action-btn">Browse Internships</a>
+                </div>
+
+                <div class="action-card">
+                    <div class="action-icon">🎯</div>
+                    <h3 style="margin-bottom: 16px;">Projects</h3>
+                    <p style="color: #666; margin-bottom: 24px;">Upload and showcase your projects to potential employers.</p>
+                    <a href="{{ url_for('student_bp.projects') }}" class="action-btn">Manage Projects</a>
+                </div>
+
+                <div class="action-card">
+                    <div class="action-icon">🎓</div>
+                    <h3 style="margin-bottom: 16px;">Workshops</h3>
+                    <p style="color: #666; margin-bottom: 24px;">Join skill development workshops and events.</p>
+                    <a href="{{ url_for('student_bp.workshops') }}" class="action-btn">View Workshops</a>
+                </div>
+
+                <div class="action-card">
+                    <div class="action-icon">🌐</div>
+                    <h3 style="margin-bottom: 16px;">Language Programs</h3>
+                    <p style="color: #666; margin-bottom: 24px;">Learn new languages and expand your horizons.</p>
+                    <a href="#" class="action-btn">Explore Languages</a>
+                </div>
+            </div>
+
+            <!-- Progress Overview -->
+            <div class="card" style="margin-top: 40px;">
+                <h3 style="margin-bottom: 24px;">Learning Progress</h3>
+                <div style="space-y: 16px;">
+                    <div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <span>Course Completion</span>
+                            <span>75%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 75%;"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <span>Skill Development</span>
+                            <span>60%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 60%;"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <span>Project Portfolio</span>
+                            <span>40%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 40%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="card" style="margin-top: 40px;">
+                <h3 style="margin-bottom: 24px;">Recent Activity</h3>
+                <div style="space-y: 16px;">
+                    <div style="padding: 16px; border: 1px solid #e5e7eb; border-radius: 8px;">
+                        <div style="font-weight: 500;">Completed Python Programming Exam</div>
+                        <div style="color: #666; font-size: 14px;">Score: 85/100 - Great job!</div>
+                        <div style="color: #666; font-size: 12px; margin-top: 4px;">2 days ago</div>
+                    </div>
+                    <div style="padding: 16px; border: 1px solid #e5e7eb; border-radius: 8px;">
+                        <div style="font-weight: 500;">Applied for Software Engineer Internship</div>
+                        <div style="color: #666; font-size: 14px;">at TechCorp Inc.</div>
+                        <div style="color: #666; font-size: 12px; margin-top: 4px;">1 week ago</div>
+                    </div>
+                    <div style="padding: 16px; border: 1px solid #e5e7eb; border-radius: 8px;">
+                        <div style="font-weight: 500;">Uploaded Machine Learning Project</div>
+                        <div style="color: #666; font-size: 14px;">Portfolio updated with new project</div>
+                        <div style="color: #666; font-size: 12px; margin-top: 4px;">2 weeks ago</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
+
+        <!-- Navigation -->
+        <nav class="dashboard-nav">
+            <div class="nav-grid">
+                <a href="{{ url_for('student_bp.courses') }}" class="nav-item glass-card">
+                    <div class="nav-icon">📚</div>
+                    <span>Courses</span>
+                </a>
+                <a href="#" class="nav-item glass-card">
+                    <div class="nav-icon">🌐</div>
+                    <span>Language Programs</span>
+                </a>
+                <a href="{{ url_for('student_bp.workshops') }}" class="nav-item glass-card">
+                    <div class="nav-icon">🎯</div>
+                    <span>Workshops</span>
+                </a>
+                <a href="{{ url_for('student_bp.exams') }}" class="nav-item glass-card">
+                    <div class="nav-icon">📝</div>
+                    <span>Exams</span>
+                </a>
+                <a href="{{ url_for('student_bp.internships') }}" class="nav-item glass-card">
+                    <div class="nav-icon">💼</div>
+                    <span>Internships</span>
+                </a>
+                <a href="{{ url_for('student_bp.projects') }}" class="nav-item glass-card">
+                    <div class="nav-icon">🚀</div>
+                    <span>Projects</span>
+                </a>
+                <a href="#" class="nav-item glass-card">
+                    <div class="nav-icon">🎓</div>
+                    <span>Competitive Exams</span>
+                </a>
+                <a href="{{ url_for('student_bp.startup') }}" class="nav-item glass-card">
+                    <div class="nav-icon">💡</div>
+                    <span>Startup Ideas</span>
+                </a>
+                <a href="{{ url_for('student_bp.jobs') }}" class="nav-item glass-card">
+                    <div class="nav-icon">🏛️</div>
+                    <span>Govt Jobs</span>
+                </a>
+                <a href="{{ url_for('student_bp.certificates') }}" class="nav-item glass-card">
+                    <div class="nav-icon">🏆</div>
+                    <span>Certificates</span>
+                </a>
+                <a href="#" class="nav-item glass-card">
+                    <div class="nav-icon">ℹ️</div>
+                    <span>About Us</span>
+                </a>
+                <a href="{{ url_for('student_bp.profile') }}" class="nav-item glass-card profile-link">
+                    <div class="nav-icon">👤</div>
+                    <span>My Profile</span>
+                </a>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="dashboard-main">
+            <!-- Quick Stats -->
+            <div class="stats-grid">
+                <div class="stat-card glass-card">
+                    <h3>Enrolled Courses</h3>
+                    <div class="stat-number">{{ enrolled_courses|length }}</div>
+                </div>
+                <div class="stat-card glass-card">
+                    <h3>Completed Projects</h3>
+                    <div class="stat-number">{{ user_projects|selectattr('status', 'equalto', 'verified')|list|length }}</div>
+                </div>
+                <div class="stat-card glass-card">
+                    <h3>Exam Scores</h3>
+                    <div class="stat-number">{{ recent_scores|length }}</div>
+                </div>
+                <div class="stat-card glass-card">
+                    <h3>Certificates</h3>
+                    <div class="stat-number">{{ certificates|length }}</div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="activity-section">
+                <div class="activity-card glass-card">
+                    <h3>Recent Exam Scores</h3>
+                    {% if recent_scores %}
+                        <div class="exam-list">
+                            {% for score in recent_scores %}
+                                <div class="exam-item">
+                                    <span class="exam-title">{{ score.exam.title }}</span>
+                                    <span class="exam-score">{{ score.score }}%</span>
+                                    <span class="exam-date">{{ score.taken_at.strftime('%d %b %Y') }}</span>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p>No exam scores yet.</p>
+                    {% endif %}
+                </div>
+
+                <div class="activity-card glass-card">
+                    <h3>Upcoming Workshops</h3>
+                    {% if upcoming_workshops %}
+                        <div class="workshop-list">
+                            {% for workshop in upcoming_workshops %}
+                                <div class="workshop-item">
+                                    <h4>{{ workshop.title }}</h4>
+                                    <p>{{ workshop.description }}</p>
+                                    <span class="workshop-date">{{ workshop.date.strftime('%d %b %Y') }}</span>
+                                    <button class="neon-btn small" onclick="attendWorkshop({{ workshop.id }})">Attend</button>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p>No upcoming workshops.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Analytics Preview -->
+            <div class="analytics-preview glass-card">
+                <h3>Analytics Overview</h3>
+                <div class="analytics-grid">
+                    <div class="analytic-item">
+                        <span class="analytic-label">Analytic Score</span>
+                        <div class="score-circle" data-score="{{ profile.analytic_score if profile else 0 }}">
+                            <span class="score-text">{{ profile.analytic_score if profile else 0 }}</span>
+                        </div>
+                    </div>
+                    <div class="analytic-item">
+                        <span class="analytic-label">Language Proficiency</span>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: {{ profile.language_proficiency if profile else 0 }}%"></div>
+                            <span class="progress-text">{{ "%.1f"|format(profile.language_proficiency if profile else 0) }}%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <style>
+        .dashboard-container {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .header-left h1 {
+            margin: 0;
+            color: #fff;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #ccc;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #00ff00;
+        }
+
+        .status-dot.connected {
+            background: #00ff00;
+            box-shadow: 0 0 10px #00ff00;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .notification-count {
+            background: #ff4444;
+            color: white;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        .logout-btn {
+            background: rgba(255, 0, 0, 0.2);
+            color: #ff6666;
+            padding: 8px 16px;
+            border-radius: 5px;
+            text-decoration: none;
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 0, 0, 0.3);
+        }
+
+        .dashboard-nav {
+            margin-bottom: 30px;
+        }
+
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            padding: 0 20px;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            text-decoration: none;
+            color: #fff;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .profile-link {
+            background: rgba(138, 43, 226, 0.2);
+            border-color: rgba(138, 43, 226, 0.3);
+        }
+
+        .dashboard-main {
+            padding: 0 20px 40px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .stat-card h3 {
+            margin: 0 0 15px 0;
+            color: #ccc;
+            font-size: 0.9em;
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #00ff00;
+        }
+
+        .activity-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .activity-card {
+            padding: 20px;
+        }
+
+        .activity-card h3 {
+            margin-top: 0;
+            color: #fff;
+        }
+
+        .exam-list, .workshop-list {
+            margin-top: 15px;
+        }
+
+        .exam-item, .workshop-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .exam-item:last-child, .workshop-item:last-child {
+            border-bottom: none;
+        }
+
+        .exam-title {
+            flex: 1;
+            color: #fff;
+        }
+
+        .exam-score {
+            color: #00ff00;
+            font-weight: bold;
+        }
+
+        .exam-date, .workshop-date {
+            color: #ccc;
+            font-size: 0.8em;
+        }
+
+        .workshop-item {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .workshop-item h4 {
+            margin: 0;
+            color: #fff;
+        }
+
+        .workshop-item p {
+            margin: 5px 0;
+            color: #ccc;
+            font-size: 0.9em;
+        }
+
+        .analytics-preview {
+            padding: 20px;
+        }
+
+        .analytics-preview h3 {
+            margin-top: 0;
+            color: #fff;
+        }
+
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .analytic-item {
+            text-align: center;
+        }
+
+        .analytic-label {
+            display: block;
+            color: #ccc;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+        }
+
+        .score-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: conic-gradient(#00ff00 0% var(--score), #333 var(--score) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .score-circle::before {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: #1a1a2e;
+            border-radius: 50%;
+        }
+
+        .score-text {
+            position: relative;
+            z-index: 1;
+            color: #00ff00;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff00, #00aa00);
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .neon-btn.small {
+            padding: 5px 10px;
+            font-size: 0.8em;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .nav-grid {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .activity-section {
+                grid-template-columns: 1fr;
+            }
+
+            .analytics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <script>
+        // Set CSS custom property for score circle
+        document.querySelectorAll('.score-circle').forEach(circle => {
+            const score = circle.dataset.score;
+            circle.style.setProperty('--score', score + '%');
+        });
+
+        function attendWorkshop(workshopId) {
+            fetch(`/student/attend_workshop/${workshopId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Attendance recorded successfully!');
+                    location.reload();
+                } else {
+                    alert('Error: ' + data.error);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Details - NEXGENU</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="glass-card">
+            <div class="header">
+                <h1>{{ student.name }}'s Profile</h1>
+                <a href="{{ url_for('college_bp.dashboard') }}" class="back-btn">← Back to Dashboard</a>
+            </div>
+
+            <div class="student-details">
+                <!-- Personal Information -->
+                <div class="detail-section">
+                    <h2>Personal Information</h2>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <label>Unique ID:</label>
+                            <span>{{ student.unique_id }}</span>
+                        </div>
+                        <div class="info-item">
+                            <label>Name:</label>
+                            <span>{{ student.name }}</span>
+                        </div>
+                        <div class="info-item">
+                            <label>Email:</label>
+                            <span>{{ student.email }}</span>
+                        </div>
+                        <div class="info-item">
+                            <label>Mobile:</label>
+                            <span>{{ profile.mobile_number if profile else 'N/A' }}</span>
+                        </div>
+                        <div class="info-item">
+                            <label>Branch:</label>
+                            <span>{{ profile.branch if profile else 'N/A' }}</span>
+                        </div>
+                        <div class="info-item">
+                            <label>College:</label>
+                            <span>{{ profile.college if profile else 'N/A' }}</span>
+                        </div>
+                        <div class="info-item">
+                            <label>Roll Number:</label>
+                            <span>{{ profile.college_roll_number if profile else 'N/A' }}</span>
+                        </div>
+                        <div class="info-item">
+                            <label>Analytic Score:</label>
+                            <span>{{ profile.analytic_score if profile else 0 }}/100</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Academic Performance -->
+                <div class="detail-section">
+                    <h2>Academic Performance</h2>
+                    <div class="performance-grid">
+                        <div class="performance-item">
+                            <h3>Enrolled Courses</h3>
+                            <div class="courses-list">
+                                {% for course in courses %}
+                                    <div class="course-item">
+                                        <h4>{{ course.name }}</h4>
+                                        <p>{{ course.description }}</p>
+                                    </div>
+                                {% endfor %}
+                                {% if not courses %}
+                                    <p>No courses enrolled.</p>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="performance-item">
+                            <h3>Exam Scores</h3>
+                            <div class="scores-list">
+                                {% for score in exam_scores %}
+                                    <div class="score-item">
+                                        <span class="exam-name">{{ score.exam.title }}</span>
+                                        <span class="exam-score">{{ score.score }}%</span>
+                                        <span class="exam-date">{{ score.taken_at.strftime('%Y-%m-%d') }}</span>
+                                    </div>
+                                {% endfor %}
+                                {% if not exam_scores %}
+                                    <p>No exam scores available.</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Projects -->
+                <div class="detail-section">
+                    <h2>Projects</h2>
+                    <div class="projects-grid">
+                        {% for project in projects %}
+                            <div class="project-card">
+                                <h4>{{ project.title }}</h4>
+                                <p>{{ project.description }}</p>
+                                <div class="project-meta">
+                                    <span>Category: {{ project.category }}</span>
+                                    <span>Status: <span class="status {{ project.status }}">{{ project.status }}</span></span>
+                                    <span>Submitted: {{ project.submission_date.strftime('%Y-%m-%d') }}</span>
+                                </div>
+                                {% if project.feedback %}
+                                    <div class="project-feedback">
+                                        <strong>Feedback:</strong> {{ project.feedback }}
+                                    </div>
+                                {% endif %}
+                                <p><a href="{{ url_for('student_bp.project_detail', project_id=project.id) }}" style="color:#4facfe; font-weight:600;">View Project Details</a></p>
+                            </div>
+                        {% endfor %}
+                        {% if not projects %}
+                            <p>No projects submitted.</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Applications -->
+                <div class="detail-section">
+                    <h2>Job/Internship Applications</h2>
+                    <div class="applications-list">
+                        {% for app in applications %}
+                            <div class="application-item">
+                                {% if app.job %}
+                                    <h4>{{ app.job.title }} (Job Application)</h4>
+                                    <p>{{ app.job.company }} - {{ app.job.location }}</p>
+                                {% elif app.internship %}
+                                    <h4>{{ app.internship.title }} (Internship Application)</h4>
+                                    <p>{{ app.internship.company }} - {{ app.internship.duration }}</p>
+                                {% endif %}
+                                <div class="app-meta">
+                                    <span>Status: <span class="status {{ app.status }}">{{ app.status }}</span></span>
+                                    <span>Applied: {{ app.applied_at.strftime('%Y-%m-%d') }}</span>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        {% if not applications %}
+                            <p>No applications submitted.</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Certificates -->
+                <div class="detail-section">
+                    <h2>Certificates</h2>
+                    <div class="certificates-list">
+                        {% for cert in certificates %}
+                            <div class="certificate-item">
+                                <h4>{{ cert.title }}</h4>
+                                <p>Issued: {{ cert.issued_at.strftime('%Y-%m-%d') }}</p>
+                                <p><a href="{{ url_for('student_bp.certificate_detail', certificate_id=cert.id) }}" style="color:#4facfe; font-weight:600;">View Certificate Details</a></p>
+                            </div>
+                        {% endfor %}
+                        {% if not certificates %}
+                            <p>No certificates earned.</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- College Update Form -->
+                <div class="detail-section">
+                    <h2>College Activity & Performance Update</h2>
+                    <form method="post" action="{{ url_for('college_bp.update_student', student_id=student.id) }}">
+                        <div class="info-grid">
+                            <div class="info-item" style="flex-direction: column; align-items:flex-start;">
+                                <label>Activity Notes</label>
+                                <textarea name="activity_notes" style="width:100%; min-height:80px; margin-top:5px; border-radius:8px;" placeholder="Add recent activity updates"></textarea>
+                            </div>
+                            <div class="info-item" style="flex-direction: column; align-items:flex-start;">
+                                <label>Project Review Feedback</label>
+                                <textarea name="project_feedback" style="width:100%; min-height:80px; margin-top:5px; border-radius:8px;" placeholder="Project remarks / status"></textarea>
+                            </div>
+                            <div class="info-item" style="flex-direction: column; align-items:flex-start;">
+                                <label>Assignment Status</label>
+                                <input type="text" name="assignment_status" placeholder="e.g., completed, pending" style="width:100%; margin-top:5px; border-radius:8px; padding:8px;" />
+                            </div>
+                        </div>
+
+                        <div class="info-grid">
+                            <div class="info-item" style="flex-direction: column; align-items:flex-start;">
+                                <label>Backlogs</label>
+                                <input type="number" min="0" name="backlogs" value="{{ profile.backlogs if profile else 0 }}" style="width:100%; margin-top:5px; border-radius:8px; padding:8px;" />
+                            </div>
+                            <div class="info-item" style="flex-direction: column; align-items:flex-start;">
+                                <label>Language Improvement Score</label>
+                                <input type="number" min="0" max="100" name="language_proficiency" value="{{ profile.language_proficiency if profile else 0 }}" style="width:100%; margin-top:5px; border-radius:8px; padding:8px;" />
+                            </div>
+                            <div class="info-item" style="flex-direction: column; align-items:flex-start;">
+                                <label>GATE/Analytic Score</label>
+                                <input type="number" min="0" max="100" name="analytic_score" value="{{ profile.analytic_score if profile else 0 }}" style="width:100%; margin-top:5px; border-radius:8px; padding:8px;" />
+                            </div>
+                        </div>
+                        <button type="submit" class="neon-btn" style="margin-top:15px;">Save updates</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .back-btn {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .detail-section {
+            margin-bottom: 40px;
+        }
+
+        .detail-section h2 {
+            color: #fff;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding-bottom: 10px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .info-item label {
+            font-weight: bold;
+            color: #ccc;
+        }
+
+        .performance-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .performance-item h3 {
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .courses-list, .scores-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .course-item, .score-item {
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 5px;
+        }
+
+        .score-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .exam-name {
+            font-weight: bold;
+        }
+
+        .exam-score {
+            color: #00ff00;
+            font-weight: bold;
+        }
+
+        .exam-date {
+            color: #ccc;
+            font-size: 14px;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .project-card {
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .project-meta {
+            display: flex;
+            gap: 15px;
+            margin: 10px 0;
+            font-size: 14px;
+            color: #ccc;
+        }
+
+        .status {
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .status.submitted {
+            background: #ffa500;
+            color: #000;
+        }
+
+        .status.verified {
+            background: #00ff00;
+            color: #000;
+        }
+
+        .status.rejected {
+            background: #ff0000;
+            color: #fff;
+        }
+
+        .status.pending {
+            background: #ffa500;
+            color: #000;
+        }
+
+        .status.approved {
+            background: #00ff00;
+            color: #000;
+        }
+
+        .project-feedback {
+            margin-top: 10px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 5px;
+            font-style: italic;
+        }
+
+        .applications-list, .certificates-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .application-item, .certificate-item {
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .app-meta {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #ccc;
+        }
+
+        @media (max-width: 768px) {
+            .performance-grid {
+                grid-template-columns: 1fr;
+            }
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</body>
+</html>

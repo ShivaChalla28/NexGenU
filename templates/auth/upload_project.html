@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Project</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>NEXGENU</h2>
+    <a href="/dashboard">Dashboard</a>
+    <a href="/projects">Projects</a>
+    <a href="/exams">Competitive Exams</a>
+    <a href="/startup">Startup Ideas</a>
+    <a href="/govt-jobs">Govt Jobs</a>
+    <a href="/certificates">Certificates</a>
+    <a href="/profile">Profile</a>
+    <a href="/logout">Logout</a>
+</div>
+
+<div class="main">
+    <div class="glass-card">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="flash-messages">
+            {% for message in messages %}
+            <div class="flash-message success">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        <h2>Upload New Project</h2>
+
+        <form method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="title">Project Title *</label>
+                <input type="text" name="title" id="title" placeholder="Enter project title" required>
+            </div>
+
+            <div class="form-group">
+                <label for="category">Category *</label>
+                <select name="category" id="category" required>
+                    <option value="">Select Category</option>
+                    {% for cat in categories %}
+                    <option value="{{ cat }}">{{ cat }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Project Description *</label>
+                <textarea name="description" id="description" placeholder="Describe your project..." rows="5" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="project_file">Project File (Optional)</label>
+                <input type="file" name="project_file" id="project_file" accept=".pdf,.doc,.docx,.zip,.rar,.ppt,.pptx,.jpg,.png,.jpeg">
+                <small style="color: rgba(255,255,255,0.6);">Supported formats: PDF, DOC, DOCX, ZIP, RAR, PPT, Images</small>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="neon-btn">Submit Project</button>
+                <a href="/projects" class="neon-btn" style="background: rgba(255,255,255,0.1);">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    color: #00fff0;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.form-group input, .form-group select, .form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid rgba(0,255,240,0.3);
+    border-radius: 8px;
+    background: rgba(255,255,255,0.05);
+    color: white;
+    font-size: 16px;
+}
+
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    outline: none;
+    border-color: #00fff0;
+    box-shadow: 0 0 10px rgba(0,255,240,0.5);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.form-group input::placeholder, .form-group textarea::placeholder {
+    color: rgba(255,255,255,0.6);
+}
+
+.form-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.flash-messages {
+    margin-bottom: 20px;
+}
+
+.flash-message {
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.flash-message.success {
+    background: rgba(0, 255, 136, 0.2);
+    border: 1px solid #00ff88;
+    color: #00ff88;
+}
+</style>
+
+</body>
+</html></content>
+<parameter name="filePath">c:\Users\chall\OneDrive\Desktop\nexgenu\templates\auth\upload_project.html

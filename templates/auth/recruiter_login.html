@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recruiter Login - NEXGENU</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .recruiter-theme {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+        .recruiter-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(67, 233, 123, 0.37);
+        }
+        .recruiter-btn {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            border: none;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .recruiter-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(67, 233, 123, 0.4);
+        }
+        .recruiter-input {
+            border: 2px solid #e1e5e9;
+            border-radius: 15px;
+            padding: 12px 20px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        .recruiter-input:focus {
+            border-color: #43e97b;
+            box-shadow: 0 0 0 3px rgba(67, 233, 123, 0.1);
+            outline: none;
+        }
+    </style>
+</head>
+<body class="recruiter-theme" style="min-height: 100vh; display: flex; align-items: center; justify-content: center;">
+    <div class="container">
+        <div class="recruiter-card" style="max-width: 450px; margin: 0 auto; padding: 40px; border-radius: 20px;">
+            <div style="text-align: center; margin-bottom: 30px;">
+                <div style="font-size: 4rem; margin-bottom: 20px;">💼</div>
+                <h2 style="color: #333; margin-bottom: 10px; font-size: 2rem;">Recruiter Portal</h2>
+                <p style="color: #666;">Discover and connect with top talent</p>
+            </div>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div style="padding: 10px; margin: 10px 0; border-radius: 10px;
+                            {% if category == 'error' %}background: #fee; border: 1px solid #fcc; color: #c33;
+                            {% else %}background: #efe; border: 1px solid #cfc; color: #363;{% endif %}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form method="post">
+                <div style="margin-bottom: 20px;">
+                    <label for="email" style="display: block; margin-bottom: 8px; color: #333; font-weight: 500;">Email Address</label>
+                    <input type="email" id="email" name="email" required class="recruiter-input" style="width: 100%;" placeholder="recruiter@company.com">
+                </div>
+
+                <div style="margin-bottom: 30px;">
+                    <label for="password" style="display: block; margin-bottom: 8px; color: #333; font-weight: 500;">Password</label>
+                    <input type="password" id="password" name="password" required class="recruiter-input" style="width: 100%;" placeholder="Your password">
+                </div>
+
+                <button type="submit" class="recruiter-btn" style="width: 100%; font-size: 16px;">Login to Recruiter Portal</button>
+            </form>
+
+            <div style="text-align: center; margin-top: 20px;">
+                <a href="{{ url_for('auth.register') }}" style="color: #43e97b; text-decoration: none; font-weight: 500;">Don't have an account? Register</a>
+            </div>
+            <div style="text-align: center; margin-top: 10px;">
+                <a href="{{ url_for('home') }}" style="color: #666; text-decoration: none; font-size: 14px;">← Back to Home</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

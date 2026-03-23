@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Dashboard - NEXGENU</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .dashboard-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header-section {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            border-radius: 20px;
+            padding: 40px;
+            color: white;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 40px rgba(79, 172, 254, 0.3);
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .header-info h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header-info p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .logout-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            padding: 12px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Main Content */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .card-title i {
+            color: #4facfe;
+            font-size: 1.3rem;
+        }
+
+        /* Students Grid */
+        .students-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .student-card {
+            background: linear-gradient(135deg, rgba(79, 172, 254, 0.1) 0%, rgba(0, 242, 254, 0.1) 100%);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .student-card:hover {
+            border-color: #4facfe;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(79, 172, 254, 0.2);
+        }
+
+        .student-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 15px;
+            color: white;
+        }
+
+        .student-name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .student-info {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 20px;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, rgba(79, 172, 254, 0.1) 0%, rgba(0, 242, 254, 0.1) 100%);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .feature-card:hover {
+            border-color: #4facfe;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(79, 172, 254, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #4facfe;
+        }
+
+        .feature-name {
+            font-weight: 600;
+            color: #333;
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+
+        .feature-count {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #4facfe;
+        }
+
+        /* Table */
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+
+        th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        tbody tr:hover {
+            background: #f9f9f9;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        @media (max-width: 768px) {
+            .header-section {
+                padding: 25px;
+            }
+
+            .header-info h1 {
+                font-size: 1.8rem;
+            }
+
+            .header-top {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .students-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            }
+
+            .table-container {
+                font-size: 0.9rem;
+            }
+
+            th, td {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-wrapper">
+        <!-- Header -->
+        <div class="header-section">
+            <div class="header-top">
+                <div class="header-info">
+                    <h1>🏛️ {{ current_user.name }}</h1>
+                    <p>Manage your institution's students and academic data</p>
+                </div>
+
+                <div style="text-align:right;">
+                    <div style="background: rgba(255,255,255,0.15); padding: 12px 18px; border-radius: 12px; margin-bottom: 12px;">
+                        <strong>College Stats</strong><br>
+                        Students: {{ stats.students }}<br>
+                        Mentors: {{ stats.mentors }}<br>
+                        Registered: {{ stats.registered_from_clg }}
+                    </div>
+                    <a href="{{ url_for('auth.logout') }}" class="logout-btn">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">{{ stats.total_students }}</div>
+                    <div class="stat-label">Total Students</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">{{ stats.active_students }}</div>
+                    <div class="stat-label">Active Students</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">{{ stats.total_projects }}</div>
+                    <div class="stat-label">Projects</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">{{ stats.total_applications }}</div>
+                    <div class="stat-label">Applications</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">{{ stats.internship_eligible }}</div>
+                    <div class="stat-label">Eligible for Internships</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">{{ stats.placement_eligible }}</div>
+                    <div class="stat-label">Eligible for Placements</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">{{ stats.jobs_got }}</div>
+                    <div class="stat-label">Got Jobs</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">{{ stats.workshops_attended }}</div>
+                    <div class="stat-label">Workshops Attended</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">{{ stats.gate_qualified }}</div>
+                    <div class="stat-label">GATE Qualified</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">{{ stats.companies_ready }}</div>
+                    <div class="stat-label">Companies Hiring</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Overview -->
+        <div class="card" style="margin-bottom: 30px;">
+            <div class="card-title">
+                <i class="fas fa-th-large"></i>
+                Quick Overview
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">👥</div>
+                    <div class="feature-name">Students</div>
+                    <div class="feature-count">{{ stats.total_students }}</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📚</div>
+                    <div class="feature-name">Courses</div>
+                    <div class="feature-count">{{ college_students|selectattr('enrollments')|list|length }}</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <div class="feature-name">Projects</div>
+                    <div class="feature-count">{{ stats.total_projects }}</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💼</div>
+                    <div class="feature-name">Applications</div>
+                    <div class="feature-count">{{ stats.total_applications }}</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">❓</div>
+                    <div class="feature-name">Inquiries</div>
+                    <div class="feature-count">{{ queries|length }}</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⭐</div>
+                    <div class="feature-name">Success Rate</div>
+                    <div class="feature-count">85%</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content Grid -->
+        <div class="content-grid">
+            <!-- Registered Students -->
+            <div class="card">
+                <div class="card-title">
+                    <i class="fas fa-users"></i>
+                    Registered Students ({{ college_students|length }})
+                </div>
+                {% if college_students %}
+                <div class="students-grid">
+                    {% for student in college_students[:8] %}
+                    <a href="{{ url_for('college_bp.view_student', student_id=student.id) }}" style="text-decoration: none; color: inherit;">
+                    <div class="student-card">
+                        <div class="student-avatar">👤</div>
+                        <div class="student-name">{{ student.name.split()[0] }}</div>
+                        <div class="student-info">{{ student.unique_id }}</div>
+                    </div>
+                    </a>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p style="text-align: center; color: #666; padding: 30px;">No students registered yet</p>
+                {% endif %}
+            </div>
+
+            <!-- Pre-Registration Queries -->
+            <div class="card">
+                <div class="card-title">
+                    <i class="fas fa-comments"></i>
+                    Inquiries ({{ queries|length }})
+                </div>
+                {% if queries %}
+                <div style="display: flex; flex-direction: column; gap: 15px;">
+                    {% for query in queries[:5] %}
+                    <div style="background: #f9f9f9; padding: 15px; border-radius: 10px; border-left: 4px solid #4facfe;">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 8px;">
+                            <div>
+                                <h4 style="color: #333; margin-bottom: 3px;">{{ query.name }}</h4>
+                                <p style="font-size: 0.85rem; color: #666;">{{ query.email }}</p>
+                            </div>
+                            <span class="status-badge status-pending">New</span>
+                        </div>
+                        <p style="font-size: 0.9rem; color: #666; line-height: 1.4;">{{ query.message[:60] }}...</p>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p style="text-align: center; color: #666; padding: 30px;">No inquiries yet</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Students Table -->
+        {% if college_students %}
+        <div class="card">
+            <div class="card-title">
+                <i class="fas fa-list"></i>
+                Student Details
+            </div>
+            <div class="table-container">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Unique ID</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in college_students[:10] %}
+                        <tr>
+                            <td><strong>{{ student.name }}</strong></td>
+                            <td>{{ student.email }}</td>
+                            <td>{{ student.unique_id }}</td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="card" style="background: linear-gradient(135deg, #edf2fb 0%, #d9e8ff 100%); margin-top:20px;">
+            <div class="card-title" style="color:#1a2f60;"><i class="fas fa-phone"></i> Contact NEXGENU Support</div>
+            <p style="margin:0 0 8px; color:#2E3E80;">Need help or want product support? Reach out to us anytime.</p>
+            <p style="margin:0; color:#2E3E80;"><strong>Email:</strong> support@nexgenu.com | <strong>Phone:</strong> +91-12345-67890</p>
+            <p style="margin:8px 0 0; color:#2E3E80;"><strong>Office:</strong> NexgenU Solution, 123 Tech Park, Bangalore</p>
+        </div>
+    </div>
+</body>
+</html>

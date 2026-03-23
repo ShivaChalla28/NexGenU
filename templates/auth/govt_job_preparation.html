@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Government Job Preparation - NEXGENU</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            width: 35%;
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 25px;
+            border-radius: 15px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-card h3 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .stat-card p {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 2em;
+            color: white;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .course-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .course-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.3);
+            border-color: #667eea;
+        }
+
+        .course-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            color: white;
+        }
+
+        .course-icon {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .course-header h3 {
+            font-size: 1.3em;
+            margin-bottom: 5px;
+        }
+
+        .course-header p {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .course-body {
+            padding: 20px;
+        }
+
+        .course-body p {
+            color: #666;
+            font-size: 0.95em;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .course-topics {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .course-topics h4 {
+            color: #667eea;
+            font-size: 0.95em;
+            margin-bottom: 10px;
+        }
+
+        .topic-list {
+            list-style: none;
+        }
+
+        .topic-list li {
+            color: #666;
+            font-size: 0.9em;
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .topic-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .course-meta span {
+            font-size: 0.9em;
+            color: #999;
+        }
+
+        .duration {
+            background: #f0f0f0;
+            color: #667eea;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-size: 0.95em;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+            width: 100%;
+        }
+
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .exam-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .exam-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border-left: 5px solid #667eea;
+        }
+
+        .exam-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 12px 40px rgba(102, 126, 234, 0.3);
+        }
+
+        .exam-card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .exam-card p {
+            color: #666;
+            font-size: 0.95em;
+            margin-bottom: 12px;
+        }
+
+        .test-info {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-size: 0.9em;
+        }
+
+        .test-info strong {
+            color: #667eea;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .resource-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .resource-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 40px rgba(102, 126, 234, 0.3);
+        }
+
+        .resource-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .resource-card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .resource-card p {
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        .faq-section {
+            margin-top: 30px;
+        }
+
+        .faq-item {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            box-shadow: 0 12px 40px rgba(102, 126, 234, 0.3);
+        }
+
+        .faq-question {
+            font-weight: 600;
+            color: #667eea;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.05em;
+        }
+
+        .faq-answer {
+            color: #666;
+            margin-top: 15px;
+            line-height: 1.6;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .breadcrumb {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+
+        .breadcrumb a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .section-title {
+                font-size: 1.5em;
+            }
+
+            .courses-grid, .exam-grid, .resources-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="{{ url_for('student_bp.dashboard') }}">Dashboard</a> / Government Job Preparation
+        </div>
+
+        <div class="header">
+            <h1>🎯 Government Job Preparation Portal</h1>
+            <p>Master all government job exams with comprehensive courses, mock tests, and expert guidance</p>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+            <p style="margin-top: 15px; font-size: 0.95em;">Your Preparation Progress: 35%</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>12</h3>
+                <p>Comprehensive Courses</p>
+            </div>
+            <div class="stat-card">
+                <h3>240+</h3>
+                <p>Mock Tests Available</p>
+            </div>
+            <div class="stat-card">
+                <h3>500+</h3>
+                <p>Practice Questions</p>
+            </div>
+            <div class="stat-card">
+                <h3>95%</h3>
+                <p>Success Rate</p>
+            </div>
+        </div>
+
+        <!-- Preparation Courses Section -->
+        <div class="section">
+            <h2 class="section-title">📚 Comprehensive Courses</h2>
+            <div class="courses-grid">
+                <!-- SSC Course -->
+                <div class="course-card">
+                    <div class="course-header">
+                        <div class="course-icon">📝</div>
+                        <h3>SSC Preparation</h3>
+                        <p>Staff Selection Commission Exams</p>
+                    </div>
+                    <div class="course-body">
+                        <p>Complete course for SSC CHSL, SSC CGL, SSC MTS, and other SSC examinations</p>
+                        <div class="course-topics">
+                            <h4>📌 Key Topics Covered:</h4>
+                            <ul class="topic-list">
+                                <li>English Language & Comprehension</li>
+                                <li>Quantitative Aptitude</li>
+                                <li>General Intelligence</li>
+                                <li>General Awareness</li>
+                            </ul>
+                        </div>
+                        <div class="course-meta">
+                            <span>📅 12 Weeks</span>
+                            <span class="duration">Beginner Level</span>
+                        </div>
+                        <button class="btn btn-primary">Start Course</button>
+                    </div>
+                </div>
+
+                <!-- UPSC Course -->
+                <div class="course-card">
+                    <div class="course-header">
+                        <div class="course-icon">🏛️</div>
+                        <h3>UPSC Preparation</h3>
+                        <p>Union Public Service Commission</p>
+                    </div>
+                    <div class="course-body">
+                        <p>In-depth preparation for UPSC Civil Services Examination and other UPSC exams</p>
+                        <div class="course-topics">
+                            <h4>📌 Key Topics Covered:</h4>
+                            <ul class="topic-list">
+                                <li>Indian Constitution & Governance</li>
+                                <li>History & Geography</li>
+                                <li>Economics & Social Issues</li>
+                                <li>International Relations</li>
+                            </ul>
+                        </div>
+                        <div class="course-meta">
+                            <span>📅 24 Weeks</span>
+                            <span class="duration">Advanced Level</span>
+                        </div>
+                        <button class="btn btn-primary">Start Course</button>
+                    </div>
+                </div>
+
+                <!-- IBPS/Banking Course -->
+                <div class="course-card">
+                    <div class="course-header">
+                        <div class="course-icon">🏦</div>
+                        <h3>Banking Exams</h3>
+                        <p>IBPS & SBI Preparation</p>
+                    </div>
+                    <div class="course-body">
+                        <p>Master banking sector exams including IBPS PO, Clerk, and SBI examinations</p>
+                        <div class="course-topics">
+                            <h4>📌 Key Topics Covered:</h4>
+                            <ul class="topic-list">
+                                <li>Quantitative Aptitude & Data Interpretation</li>
+                                <li>Reasoning & Logical Thinking</li>
+                                <li>Banking Awareness</li>
+                                <li>English Language</li>
+                            </ul>
+                        </div>
+                        <div class="course-meta">
+                            <span>📅 8 Weeks</span>
+                            <span class="duration">Intermediate Level</span>
+                        </div>
+                        <button class="btn btn-primary">Start Course</button>
+                    </div>
+                </div>
+
+                <!-- Railway Course -->
+                <div class="course-card">
+                    <div class="course-header">
+                        <div class="course-icon">🚂</div>
+                        <h3>Railway Exams</h3>
+                        <p>RRB & Indian Railways</p>
+                    </div>
+                    <div class="course-body">
+                        <p>Complete preparation for RRB NTPC, JE, and other railway sector examinations</p>
+                        <div class="course-topics">
+                            <h4>📌 Key Topics Covered:</h4>
+                            <ul class="topic-list">
+                                <li>Arithmetic & Mathematics</li>
+                                <li>Reasoning & Problem Solving</li>
+                                <li>Technical Knowledge</li>
+                                <li>General Science</li>
+                            </ul>
+                        </div>
+                        <div class="course-meta">
+                            <span>📅 10 Weeks</span>
+                            <span class="duration">Beginner to Advanced</span>
+                        </div>
+                        <button class="btn btn-primary">Start Course</button>
+                    </div>
+                </div>
+
+                <!-- Defense Exams -->
+                <div class="course-card">
+                    <div class="course-header">
+                        <div class="course-icon">⚔️</div>
+                        <h3>Defense Services</h3>
+                        <p>NDA, CDS & Armed Forces</p>
+                    </div>
+                    <div class="course-body">
+                        <p>Comprehensive training for NDA, CDS, and other defense service examinations</p>
+                        <div class="course-topics">
+                            <h4>📌 Key Topics Covered:</h4>
+                            <ul class="topic-list">
+                                <li>Military History & Knowledge</li>
+                                <li>Physical Fitness Guidelines</li>
+                                <li>Leadership & Aptitude</li>
+                                <li>Advanced Mathematics</li>
+                            </ul>
+                        </div>
+                        <div class="course-meta">
+                            <span>📅 16 Weeks</span>
+                            <span class="duration">Advanced Level</span>
+                        </div>
+                        <button class="btn btn-primary">Start Course</button>
+                    </div>
+                </div>
+
+                <!-- Police & Law Course -->
+                <div class="course-card">
+                    <div class="course-header">
+                        <div class="course-icon">👮</div>
+                        <h3>Police Exams</h3>
+                        <p>Police & Law Enforcement</p>
+                    </div>
+                    <div class="course-body">
+                        <p>Preparation for various police recruitment exams and law enforcement positions</p>
+                        <div class="course-topics">
+                            <h4>📌 Key Topics Covered:</h4>
+                            <ul class="topic-list">
+                                <li>Law & Order Concepts</li>
+                                <li>Current Affairs & Politics</li>
+                                <li>Physical Fitness Standards</li>
+                                <li>Interview Preparation</li>
+                            </ul>
+                        </div>
+                        <div class="course-meta">
+                            <span>📅 12 Weeks</span>
+                            <span class="duration">Intermediate Level</span>
+                        </div>
+                        <button class="btn btn-primary">Start Course</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mock Tests Section -->
+        <div class="section">
+            <h2 class="section-title">📊 Full Length Mock Tests</h2>
+            <div class="exam-grid">
+                <div class="exam-card">
+                    <h3>SSC CGL Mocks</h3>
+                    <p>Practice tests designed exactly like actual SSC CGL examinations</p>
+                    <div class="test-info">
+                        <strong>✓ Tests Available:</strong> 50<br>
+                        <strong>✓ Total Questions:</strong> 2,500<br>
+                        <strong>✓ Duration:</strong> 2 hours each
+                    </div>
+                    <button class="btn btn-secondary">Take Mock Test</button>
+                </div>
+
+                <div class="exam-card">
+                    <h3>UPSC Prelims Mocks</h3>
+                    <p>Full-length UPSC prelims papers with detailed solutions</p>
+                    <div class="test-info">
+                        <strong>✓ Tests Available:</strong> 30<br>
+                        <strong>✓ Total Questions:</strong> 2,400<br>
+                        <strong>✓ Duration:</strong> 2.5 hours each
+                    </div>
+                    <button class="btn btn-secondary">Take Mock Test</button>
+                </div>
+
+                <div class="exam-card">
+                    <h3>Banking Exams Mocks</h3>
+                    <p>IBPS & SBI pattern tests with latest exam patterns</p>
+                    <div class="test-info">
+                        <strong>✓ Tests Available:</strong> 40<br>
+                        <strong>✓ Total Questions:</strong> 3,200<br>
+                        <strong>✓ Duration:</strong> 2 hours each
+                    </div>
+                    <button class="btn btn-secondary">Take Mock Test</button>
+                </div>
+
+                <div class="exam-card">
+                    <h3>Railway RRB Mocks</h3>
+                    <p>RRB NTPC and JE comprehensive mock papers</p>
+                    <div class="test-info">
+                        <strong>✓ Tests Available:</strong> 35<br>
+                        <strong>✓ Total Questions:</strong> 2,800<br>
+                        <strong>✓ Duration:</strong> 1.5 hours each
+                    </div>
+                    <button class="btn btn-secondary">Take Mock Test</button>
+                </div>
+
+                <div class="exam-card">
+                    <h3>NDA/CDS Mocks</h3>
+                    <p>Defense services entrance exam preparation papers</p>
+                    <div class="test-info">
+                        <strong>✓ Tests Available:</strong> 25<br>
+                        <strong>✓ Total Questions:</strong> 1,500<br>
+                        <strong>✓ Duration:</strong> 2.5 hours each
+                    </div>
+                    <button class="btn btn-secondary">Take Mock Test</button>
+                </div>
+
+                <div class="exam-card">
+                    <h3>General Aptitude Tests</h3>
+                    <p>Subject-wise practice tests for all competitive exams</p>
+                    <div class="test-info">
+                        <strong>✓ Tests Available:</strong> 60<br>
+                        <strong>✓ Total Questions:</strong> 1,800<br>
+                        <strong>✓ Duration:</strong> 30-60 minutes each
+                    </div>
+                    <button class="btn btn-secondary">Take Mock Test</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Learning Resources Section -->
+        <div class="section">
+            <h2 class="section-title">📖 Study Resources</h2>
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <div class="resource-icon">📚</div>
+                    <h3>Study Notes</h3>
+                    <p>Comprehensive notes prepared by expert instructors for all topics and exams</p>
+                    <button class="btn btn-secondary" style="margin-top: 15px;">Download Notes</button>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-icon">🎥</div>
+                    <h3>Video Lectures</h3>
+                    <p>High-quality video tutorials covering all exam patterns and concepts</p>
+                    <button class="btn btn-secondary" style="margin-top: 15px;">Watch Lectures</button>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-icon">📊</div>
+                    <h3>Performance Analytics</h3>
+                    <p>Detailed analysis of your test performance and improvement areas</p>
+                    <button class="btn btn-secondary" style="margin-top: 15px;">View Analytics</button>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-icon">👨‍🏫</div>
+                    <h3>Expert Guidance</h3>
+                    <p>One-on-one mentoring and doubt clearing sessions with experienced instructors</p>
+                    <button class="btn btn-secondary" style="margin-top: 15px;">Book Session</button>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-icon">🔔</div>
+                    <h3>Current Affairs</h3>
+                    <p>Daily current affairs updates and notes relevant to government exams</p>
+                    <button class="btn btn-secondary" style="margin-top: 15px;">Read Updates</button>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-icon">💬</div>
+                    <h3>Community Forum</h3>
+                    <p>Connect with fellow aspirants and discuss strategies and solutions</p>
+                    <button class="btn btn-secondary" style="margin-top: 15px;">Join Community</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="section faq-section">
+            <h2 class="section-title">❓ Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>What is the best exam to start with for a beginner?</span>
+                    <span>▼</span>
+                </div>
+                <div class="faq-answer">
+                    We recommend starting with SSC CHSL or SSC MTS as these are relatively easier than SSC CGL and provide a good foundation for competitive exams. These exams have less stringent eligibility criteria and help you understand the exam pattern better.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>How many hours per day should I study for government exams?</span>
+                    <span>▼</span>
+                </div>
+                <div class="faq-answer">
+                    Ideally, 4-6 hours of dedicated study per day is recommended for effective preparation. However, consistency matters more than duration. It's better to study 3-4 hours daily with full concentration than 8 hours with distraction. Quality over quantity is key.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Can I prepare for multiple exams simultaneously?</span>
+                    <span>▼</span>
+                </div>
+                <div class="faq-answer">
+                    Yes, you can prepare for related exams together. For example, SSC and Banking exams share common topics in Quantitative Aptitude and English. We recommend focusing on one exam primarily while practicing common sections for other exams.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>What is the ideal preparation duration?</span>
+                    <span>▼</span>
+                </div>
+                <div class="faq-answer">
+                    The preparation period depends on the exam difficulty and your background. For SSC exams: 3-6 months, Banking exams: 2-3 months, UPSC: 1-2 years, NDA/CDS: 4-6 months. Starting preparation 6-12 months before the exam gives you enough buffer time.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>How do I track my progress effectively?</span>
+                    <span>▼</span>
+                </div>
+                <div class="faq-answer">
+                    Our analytics dashboard provides detailed insights into your test performance, weak areas, and improvement trends. Review your performance analytics weekly, identify weak topics, and allocate more time to those areas. This systematic approach helps you improve faster.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>What happens if I fail in the exam?</span>
+                    <span>▼</span>
+                </div>
+                <div class="faq-answer">
+                    Most government exams don't have any restriction on number of attempts. You can attempt as many times as you wish (subject to age limit). Use our detailed performance analytics to identify weak areas and focus on improvement for the next attempt.
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="nav-buttons">
+            <a href="{{ url_for('student_bp.dashboard') }}" class="btn btn-secondary">← Back to Dashboard</a>
+            <a href="{{ url_for('student_bp.jobs') }}" class="btn btn-primary">View Available Jobs →</a>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.addEventListener('click', function() {
+                this.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>

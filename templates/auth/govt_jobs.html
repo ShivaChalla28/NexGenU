@@ -1,0 +1,21 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+<div class="sidebar">
+    <h2>NEXGENU</h2>
+    <a href="/dashboard">Dashboard</a>
+    <a href="/projects">Projects</a>
+    <a href="/exams">Competitive Exams</a>
+    <a href="/startup">Startup Ideas</a>
+    <a href="/govt-jobs">Govt Jobs</a>
+    <a href="/certificates">Certificates</a>
+    <a href="/profile">Profile</a>
+    <a href="/logout">Logout</a>
+</div>
+
+<div class="glass-card hero">
+    <h2>Govt Jobs for Score: {{ score }}</h2>
+    {% for job in jobs %}
+        <p>{{ job.title }} at {{ job.company }} - {{ job.description }}</p>
+    {% endfor %}
+    <p style="font-size:12px">© NEXGENU</p>
+</div>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exams - NEXGENU</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .student-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+        .exam-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-top: 40px;
+        }
+        .exam-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        .exam-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.15);
+        }
+        .exam-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        .exam-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+        .score-badge {
+            background: #10b981;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="glass-card" style="position: fixed; top: 0; left: 0; right: 0; z-index: 1000; margin: 1rem; border-radius: 50px;">
+        <div class="container flex justify-between items-center" style="padding: 0.75rem 1.5rem;">
+            <div class="flex items-center gap-4">
+                <h2 style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-size: 1.5rem; font-weight: 800;">
+                    NEXGENU
+                </h2>
+                <span style="color: #666; font-size: 14px;">Student Portal</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="{{ url_for('student_bp.dashboard') }}" class="btn btn-secondary btn-sm">Dashboard</a>
+                <span>Welcome, {{ current_user.name }}</span>
+                <a href="{{ url_for('auth.logout') }}" class="btn btn-secondary btn-sm">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <section class="student-header" style="margin-top: 80px;">
+        <div class="container">
+            <h1 style="font-size: 3rem; margin-bottom: 16px;">Exams</h1>
+            <p style="font-size: 1.2rem; opacity: 0.9;">Take exams and track your performance</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section style="padding: 40px 0;">
+        <div class="container">
+            {% if exam_scores %}
+            <h2 style="margin-bottom: 24px;">My Exam Scores</h2>
+            <div class="exam-grid">
+                {% for score in exam_scores %}
+                <div class="exam-card">
+                    <h3 style="margin-bottom: 12px;">{{ score.exam.title if score.exam else 'Exam' }}</h3>
+                    <p style="color: #666; margin-bottom: 16px;">Score: {{ score.score }}/{{ score.total_marks or 100 }}</p>
+                    <div class="score-badge">Completed</div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {% if available_exams %}
+            <h2 style="margin-bottom: 24px; margin-top: 40px;">Available Exams</h2>
+            <div class="exam-grid">
+                {% for exam in available_exams %}
+                <div class="exam-card">
+                    <h3 style="margin-bottom: 12px;">{{ exam.title }}</h3>
+                    <p style="color: #666; margin-bottom: 16px;">{{ exam.description or 'No description available' }}</p>
+                    <a href="{{ url_for('take_exam', exam_id=exam.id) }}" class="exam-btn">Take Exam</a>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {% if not exam_scores and not available_exams %}
+            <div style="text-align: center; padding: 40px;">
+                <h3>No exams available at the moment.</h3>
+                <p style="color: #666;">Check back later for new exam opportunities.</p>
+            </div>
+            {% endif %}
+        </div>
+    </section>
+</body>
+</html>

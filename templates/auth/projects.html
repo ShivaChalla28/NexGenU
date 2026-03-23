@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Projects - NEXGENU</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .student-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-top: 40px;
+        }
+        .project-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        .project-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.15);
+        }
+        .project-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        .project-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .status-verified {
+            background: #10b981;
+            color: white;
+        }
+        .status-pending {
+            background: #f59e0b;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="glass-card" style="position: fixed; top: 0; left: 0; right: 0; z-index: 1000; margin: 1rem; border-radius: 50px;">
+        <div class="container flex justify-between items-center" style="padding: 0.75rem 1.5rem;">
+            <div class="flex items-center gap-4">
+                <h2 style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-size: 1.5rem; font-weight: 800;">
+                    NEXGENU
+                </h2>
+                <span style="color: #666; font-size: 14px;">Student Portal</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="{{ url_for('student_bp.dashboard') }}" class="btn btn-secondary btn-sm">Dashboard</a>
+                <span>Welcome, {{ current_user.name }}</span>
+                <a href="{{ url_for('auth.logout') }}" class="btn btn-secondary btn-sm">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <section class="student-header" style="margin-top: 80px;">
+        <div class="container">
+            <h1 style="font-size: 3rem; margin-bottom: 16px;">My Projects</h1>
+            <p style="font-size: 1.2rem; opacity: 0.9;">Showcase your work and build your portfolio</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section style="padding: 40px 0;">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 40px;">
+                <a href="{{ url_for('upload_project') }}" class="project-btn" style="max-width: 200px; margin: 0 auto;">Upload New Project</a>
+            </div>
+
+            {% if projects %}
+            <h2 style="margin-bottom: 24px;">Your Projects</h2>
+            <div class="project-grid">
+                {% for project in projects %}
+                <div class="project-card">
+                    <h3 style="margin-bottom: 12px;">{{ project.title }}</h3>
+                    <p style="color: #666; margin-bottom: 12px;">{{ project.description or 'No description available' }}</p>
+                    <p style="color: #666; margin-bottom: 16px;"><strong>Technology:</strong> {{ project.technology or 'Not specified' }}</p>
+                    {% if project.status == 'verified' %}
+                        <div class="status-badge status-verified">Verified</div>
+                    {% else %}
+                        <div class="status-badge status-pending">Pending Review</div>
+                    {% endif %}
+                    <a href="{{ url_for('student_bp.project_detail', project_id=project.id) }}" class="project-btn" style="margin-top:12px;">View Details</a>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div style="text-align: center; padding: 40px;">
+                <h3>No projects uploaded yet.</h3>
+                <p style="color: #666;">Start building your portfolio by uploading your first project.</p>
+            </div>
+            {% endif %}
+        </div>
+    </section>
+</body>
+</html>
+
+        <!-- User's Projects -->
+        {% if projects %}
+        <div class="user-projects">
+            <h3>Your Projects</h3>
+            <div class="projects-grid">
+                {% for project in projects %}
+                <div class="project-card">
+                    <div class="project-header">
+                        <h4>{{ project.title }}</h4>
+                        <span class="project-status status-{{ project.status }}">
+                            {% if project.status == 'draft' %}Draft{% endif %}
+                            {% if project.status == 'submitted' %}Submitted{% endif %}
+                            {% if project.status == 'verified' %}Verified ✓{% endif %}
+                            {% if project.status == 'rejected' %}Rejected ✗{% endif %}
+                        </span>
+                    </div>
+                    <div class="project-info">
+                        <p><strong>Category:</strong> {{ project.category }}</p>
+                        <p><strong>Submitted:</strong> {{ project.submission_date.strftime('%d %b %Y') }}</p>
+                        {% if project.verification_date %}
+                        <p><strong>Verified:</strong> {{ project.verification_date.strftime('%d %b %Y') }}</p>
+                        {% endif %}
+                        {% if project.feedback %}
+                        <p><strong>Feedback:</strong> {{ project.feedback }}</p>
+                        {% endif %}
+                    </div>
+                    {% if project.file_path %}
+                    <div class="project-actions">
+                        <a href="{{ url_for('static', filename=project.file_path) }}" target="_blank" class="neon-btn small">View File</a>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Available Project Categories -->
+        <div class="available-projects">
+            <h3>Available Project Categories</h3>
+            <div class="categories-grid">
+                {% for branch, items in categories.items() %}
+                <div class="category-card">
+                    <h4>{{ branch }}</h4>
+                    <ul>
+                        {% for item in items %}
+                        <li>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.projects-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.project-stats {
+    display: flex;
+    gap: 30px;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 2em;
+    color: #00fff0;
+    font-weight: bold;
+    display: block;
+}
+
+.stat-label {
+    color: rgba(255,255,255,0.7);
+    font-size: 0.9em;
+}
+
+.user-projects, .available-projects {
+    margin-bottom: 40px;
+}
+
+.user-projects h3, .available-projects h3 {
+    color: #00fff0;
+    margin-bottom: 20px;
+    border-bottom: 2px solid rgba(0,255,240,0.3);
+    padding-bottom: 10px;
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 20px;
+}
+
+.project-card {
+    background: rgba(255,255,255,0.05);
+    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid rgba(0,255,240,0.2);
+}
+
+.project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.project-header h4 {
+    margin: 0;
+    color: #00fff0;
+}
+
+.project-status {
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.8em;
+    font-weight: bold;
+}
+
+.status-draft { background: rgba(255,165,0,0.2); color: #ffa500; }
+.status-submitted { background: rgba(0,123,255,0.2); color: #007bff; }
+.status-verified { background: rgba(0,255,136,0.2); color: #00ff88; }
+.status-rejected { background: rgba(255,71,87,0.2); color: #ff4757; }
+
+.project-info p {
+    margin: 5px 0;
+    color: rgba(255,255,255,0.8);
+}
+
+.project-actions {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.neon-btn.small {
+    padding: 8px 16px;
+    font-size: 0.9em;
+}
+
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.category-card {
+    background: rgba(255,255,255,0.05);
+    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid rgba(0,255,240,0.2);
+}
+
+.category-card h4 {
+    color: #00fff0;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.category-card ul {
+    list-style: none;
+    padding: 0;
+}
+
+.category-card li {
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.8);
+}
+
+.category-card li:last-child {
+    border-bottom: none;
+}
+
+.flash-messages {
+    margin-bottom: 20px;
+}
+
+.flash-message {
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.flash-message.success {
+    background: rgba(0, 255, 136, 0.2);
+    border: 1px solid #00ff88;
+    color: #00ff88;
+}
+</style>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recruiter Dashboard - NEXGENU</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .recruiter-header {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-top: 40px;
+        }
+        .metric-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+        .metric-number {
+            font-size: 48px;
+            font-weight: bold;
+            color: #43e97b;
+            margin-bottom: 8px;
+        }
+        .metric-label {
+            color: #666;
+            font-size: 14px;
+        }
+        .action-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        .action-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.15);
+        }
+        .action-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+        .action-btn {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(67, 233, 123, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="glass-card" style="position: fixed; top: 0; left: 0; right: 0; z-index: 1000; margin: 1rem; border-radius: 50px;">
+        <div class="container flex justify-between items-center" style="padding: 0.75rem 1.5rem;">
+            <div class="flex items-center gap-4">
+                <h2 style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-size: 1.5rem; font-weight: 800;">
+                    NEXGENU
+                </h2>
+                <span style="color: #666; font-size: 14px;">Recruiter Portal</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <span>Welcome, {{ current_user.name }}</span>
+                <a href="{{ url_for('auth.logout') }}" class="btn btn-secondary btn-sm">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <section class="recruiter-header" style="margin-top: 80px;">
+        <div class="container">
+            <h1 style="font-size: 3rem; margin-bottom: 16px;">Recruiter Dashboard</h1>
+            <p style="font-size: 1.2rem; opacity: 0.9;">Discover and connect with top talent from NEXGENU</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section style="padding: 40px 0;">
+        <div class="container">
+            <!-- Metrics -->
+            <div class="dashboard-grid">
+                <div class="metric-card">
+                    <div class="metric-number">2,500+</div>
+                    <div class="metric-label">Active Students</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">150+</div>
+                    <div class="metric-label">Partner Colleges</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">85%</div>
+                    <div class="metric-label">Placement Rate</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">50+</div>
+                    <div class="metric-label">Active Job Postings</div>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="dashboard-grid" style="margin-top: 40px;">
+                <div class="action-card">
+                    <div class="action-icon">🔍</div>
+                    <h3 style="margin-bottom: 16px;">Browse Talent</h3>
+                    <p style="color: #666; margin-bottom: 24px;">Search and filter through student profiles, skills, and achievements.</p>
+                    <button class="action-btn">Browse Students</button>
+                </div>
+
+                <div class="action-card">
+                    <div class="action-icon">📋</div>
+                    <h3 style="margin-bottom: 16px;">Post Job Opening</h3>
+                    <p style="color: #666; margin-bottom: 24px;">Create and publish job opportunities for students and graduates.</p>
+                    <button class="action-btn">Post Job</button>
+                </div>
+
+                <div class="action-card">
+                    <div class="action-icon">📊</div>
+                    <h3 style="margin-bottom: 16px;">Analytics Dashboard</h3>
+                    <p style="color: #666; margin-bottom: 24px;">View recruitment metrics, application trends, and success rates.</p>
+                    <button class="action-btn">View Analytics</button>
+                </div>
+
+                <div class="action-card">
+                    <div class="action-icon">💬</div>
+                    <h3 style="margin-bottom: 16px;">Campus Connect</h3>
+                    <p style="color: #666; margin-bottom: 24px;">Schedule campus visits, webinars, and connect with college partners.</p>
+                    <button class="action-btn">Schedule Events</button>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="card" style="margin-top: 40px;">
+                <h3 style="margin-bottom: 24px;">Recent Activity</h3>
+                <div style="space-y: 16px;">
+                    <div style="padding: 16px; border: 1px solid #e5e7eb; border-radius: 8px;">
+                        <div style="font-weight: 500;">New student applications received</div>
+                        <div style="color: #666; font-size: 14px;">15 students applied for Software Engineer positions</div>
+                        <div style="color: #666; font-size: 12px; margin-top: 4px;">2 hours ago</div>
+                    </div>
+                    <div style="padding: 16px; border: 1px solid #e5e7eb; border-radius: 8px;">
+                        <div style="font-weight: 500;">Campus event scheduled</div>
+                        <div style="color: #666; font-size: 14px;">Tech Talk at MIT - March 25, 2026</div>
+                        <div style="color: #666; font-size: 12px; margin-top: 4px;">1 day ago</div>
+                    </div>
+                    <div style="padding: 16px; border: 1px solid #e5e7eb; border-radius: 8px;">
+                        <div style="font-weight: 500;">New partnership established</div>
+                        <div style="color: #666; font-size: 14px;">Collaboration with Stanford University</div>
+                        <div style="color: #666; font-size: 12px; margin-top: 4px;">3 days ago</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

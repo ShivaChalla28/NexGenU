@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parent Dashboard - NEXGENU</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .dashboard-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header-section {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 20px;
+            padding: 40px;
+            color: white;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 40px rgba(245, 87, 108, 0.3);
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .header-info h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header-info p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .logout-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            padding: 12px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .header-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Main Content */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .card-title i {
+            color: #f5576c;
+            font-size: 1.3rem;
+        }
+
+        /* Child Info */
+        .child-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .child-info-item {
+            background: linear-gradient(135deg, rgba(240, 147, 251, 0.1) 0%, rgba(245, 87, 108, 0.1) 100%);
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .child-info-item:hover {
+            border-color: #f5576c;
+            transform: translateY(-3px);
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-value {
+            color: #333;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        /* Progress Sections */
+        .progress-section {
+            margin-bottom: 30px;
+        }
+
+        .progress-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .progress-item:last-child {
+            border-bottom: none;
+        }
+
+        .progress-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .progress-bar {
+            width: 150px;
+            height: 8px;
+            background: #e1e5e9;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .progress-value {
+            color: #f5576c;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* No Child Section */
+        .no-child-box {
+            text-align: center;
+            padding: 60px 30px;
+            background: linear-gradient(135deg, rgba(240, 147, 251, 0.1) 0%, rgba(245, 87, 108, 0.1) 100%);
+            border-radius: 15px;
+            border: 2px dashed #f5576c;
+        }
+
+        .no-child-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .no-child-text {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .link-child-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .link-child-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(245, 87, 108, 0.3);
+        }
+
+        /* Features */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, rgba(240, 147, 251, 0.1) 0%, rgba(245, 87, 108, 0.1) 100%);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .feature-card:hover {
+            border-color: #f5576c;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(245, 87, 108, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #f5576c;
+        }
+
+        .feature-name {
+            font-weight: 600;
+            color: #333;
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .header-section {
+                padding: 25px;
+            }
+
+            .header-info h1 {
+                font-size: 1.8rem;
+            }
+
+            .header-top {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .child-info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .progress-bar {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-wrapper">
+        <!-- Header -->
+        <div class="header-section">
+            <div class="header-top">
+                <div class="header-info">
+                    <h1>👋 Welcome, {{ current_user.name }}!</h1>
+                    <p>Monitor your child's academic progress on NEXGENU</p>
+                </div>
+                <a href="{{ url_for('auth.logout') }}" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+
+            <div class="header-stats">
+                <div class="stat-card">
+                    <div class="stat-number">{{ 'Yes' if child else 'No' }}</div>
+                    <div class="stat-label">Child Linked</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">{% if child %}{{ child_courses|length }}{% else %}0{% endif %}</div>
+                    <div class="stat-label">Courses</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">{% if child %}{{ child_exam_scores|length }}{% else %}0{% endif %}</div>
+                    <div class="stat-label">Exams</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">{% if child %}{{ child_applications|length }}{% else %}0{% endif %}</div>
+                    <div class="stat-label">Applications</div>
+                </div>
+            </div>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div style="margin-top: 15px;">
+                        {% for category, message in messages %}
+                            <div style="padding: 10px; margin-bottom: 8px; border-radius: 10px; font-weight: 600; {% if category == 'error' %}background: #ffe6e6; border: 1px solid #f5c2c2; color: #a33;{% else %}background: #e6ffe6; border: 1px solid #c2f5c2; color: #2a6;{% endif %}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+        </div>
+
+        <!-- Main Content -->
+        {% if children %}
+        <div class="card" style="margin-bottom:20px;">
+            <div class="card-title"><i class="fas fa-users"></i> Linked Children</div>
+            <div class="child-info-grid" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));">
+                {% for c in children %}
+                <div class="child-info-item" style="border: 2px solid {% if c.id == child.id %}#f5576c{% else %}#ddd{% endif %};">
+                    <div class="info-label">{{ c.name }}</div>
+                    <div class="info-value">{{ c.unique_id }}</div>
+                    <a href="{{ url_for('parent_bp.dashboard', child_id=c.id) }}" style="display:inline-block; margin-top:10px; color:#f5576c;">View</a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if child %}
+        <div class="content-grid">
+            <!-- Child Information -->
+            <div class="card">
+                <div class="card-title">
+                    <i class="fas fa-child"></i>
+                    Child Profile
+                </div>
+                <div class="child-info-grid">
+                    <div class="child-info-item">
+                        <div class="info-label">Name</div>
+                        <div class="info-value">{{ child.name }}</div>
+                    </div>
+                    <div class="child-info-item">
+                        <div class="info-label">Email</div>
+                        <div class="info-value">{{ child.email }}</div>
+                    </div>
+                    <div class="child-info-item">
+                        <div class="info-label">Unique ID</div>
+                        <div class="info-value">{{ child.unique_id }}</div>
+                    </div>
+                    {% if child_profile %}
+                    <div class="child-info-item">
+                        <div class="info-label">Branch</div>
+                        <div class="info-value">{{ child_profile.branch }}</div>
+                    </div>
+                    <div class="child-info-item">
+                        <div class="info-label">College</div>
+                        <div class="info-value">{{ child_profile.college }}</div>
+                    </div>
+                    <div class="child-info-item">
+                        <div class="info-label">Roll Number</div>
+                        <div class="info-value">{{ child_profile.college_roll_number }}</div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Add/Add more children -->
+            <div class="card" style="margin-top: 20px;">
+                <div class="card-title"><i class="fas fa-plus-circle"></i> Add another child</div>
+                <form method="post" action="{{ url_for('parent_bp.link_child') }}" style="display:flex; flex-wrap:wrap; gap:10px; align-items:center;">
+                    <input name="child_unique_id" type="text" placeholder="Enter your child\'s Unique ID (e.g. 241001CSE001NEXG)" required style="flex:1; min-width:220px; padding: 10px; border-radius: 10px; border: 1px solid #ccc;" />
+                    <button type="submit" class="link-child-btn" style="padding: 10px 18px;">Link Child</button>
+                </form>
+            </div>
+
+            <!-- Academic Progress -->
+            <div class="card">
+                <div class="card-title">
+                    <i class="fas fa-chart-line"></i>
+                    Academic Performance
+                </div>
+                
+                <div class="progress-section">
+                    <h3 style="margin-bottom: 20px; color: #333; font-size: 1.1rem;">Course Progress</h3>
+                    {% for course in child_courses[:5] %}
+                    <div class="progress-item">
+                        <div class="progress-name">{{ course.name }}</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 75%;"></div>
+                        </div>
+                        <div class="progress-value">75%</div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="progress-section">
+                    <h3 style="margin-bottom: 20px; color: #333; font-size: 1.1rem;">Exam Performance</h3>
+                    {% if child_exam_scores %}
+                        {% for score in child_exam_scores[:3] %}
+                        <div class="progress-item">
+                            <div class="progress-name">Exam {{ loop.index }}</div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: {{ score.score }}%;"></div>
+                            </div>
+                            <div class="progress-value">{{ score.score }}%</div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                    <p style="color: #666; text-align: center; padding: 20px;">No exams taken yet</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Activity Overview -->
+            <div class="card">
+                <div class="card-title">
+                    <i class="fas fa-tasks"></i>
+                    Activity Overview
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">📚</div>
+                        <div class="feature-name">{{ child_courses|length }} Courses</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">✏️</div>
+                        <div class="feature-name">{{ child_exam_scores|length }} Exams</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎯</div>
+                        <div class="feature-name">{{ child_projects|length }} Projects</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎓</div>
+                        <div class="feature-name">{{ child_workshops|length }} Workshops</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💼</div>
+                        <div class="feature-name">{{ child_applications|length }} Applications</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🏆</div>
+                        <div class="feature-name">{{ child_certificates|length }} Certificates</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Child Projects Quick Links -->
+        <div class="card">
+            <div class="card-title">
+                <i class="fas fa-project-diagram"></i>
+                Child Projects
+            </div>
+            {% if child_projects %}
+            <ul style="list-style:none;padding:0;margin:0;">
+                {% for project in child_projects[:6] %}
+                <li style="margin-bottom: 12px;">
+                    <strong>{{ project.title }}</strong> - <a href="{{ url_for('student_bp.project_detail', project_id=project.id) }}" style="color:#f5576c; font-weight:600;">See details</a>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+                <p style="color:#666;">No projects available yet.</p>
+            {% endif %}
+        </div>
+
+        {% else %}
+        <!-- No Child Linked -->
+        <div class="card">
+            <div class="no-child-box">
+                <div class="no-child-icon">👨‍👩‍👧‍👦</div>
+                <h2 style="color: #333; margin-bottom: 15px;">No Child Linked Yet</h2>
+                <p class="no-child-text">
+                    To view your child's academic progress, you need to link their account with your child's unique ID.<br>
+                    Ask your child for their Unique ID (e.g. 241001CSE001NEXG) and enter it below.
+                </p>
+                <form method="post" action="{{ url_for('parent_bp.link_child') }}" style="margin-top: 20px; display: flex; flex-direction: column; align-items: center; gap: 12px;">
+                    <input name="child_unique_id" type="text" placeholder="Enter your child's Unique ID" required style="width: 100%; max-width: 350px; padding: 10px 14px; border-radius: 10px; border: 1px solid #ccc;" />
+                    <button type="submit" class="link_child_btn" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; border: none; padding: 12px 30px; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 0.95rem;">Link Child Account</button>
+                </form>
+                <div style="margin-top: 20px;">
+                    <a href="{{ url_for('parent_bp.profile') }}" style="display: inline-block; color: #f5576c; font-weight: 600; text-decoration: underline;">Update your profile</a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

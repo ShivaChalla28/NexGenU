@@ -1,0 +1,230 @@
+<div class="main">
+    <div class="glass-card fade-in">
+        <h2 class="text-glow">Startup Ideas Development</h2>
+        <p class="description">Explore and develop innovative startup ideas with guidance from mentors and industry experts. Submit your concepts, track progress, and connect with potential investors.</p>
+
+        <!-- Submit New Idea Section -->
+        <div class="glass-panel">
+            <h3>Submit Your Startup Idea</h3>
+            <form id="startup-idea-form" method="POST" action="/submit_startup_idea">
+                <div class="form-group">
+                    <label for="idea-title">Idea Title</label>
+                    <input type="text" id="idea-title" name="title" required class="glass-input" placeholder="Enter your startup idea title">
+                </div>
+                <div class="form-group">
+                    <label for="idea-description">Description</label>
+                    <textarea id="idea-description" name="description" required class="glass-textarea" placeholder="Describe your startup idea in detail"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="idea-category">Category</label>
+                    <select id="idea-category" name="category" class="glass-select">
+                        <option value="">Select Category</option>
+                        <option value="tech">Technology</option>
+                        <option value="healthcare">Healthcare</option>
+                        <option value="education">Education</option>
+                        <option value="finance">Finance</option>
+                        <option value="environment">Environment</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="idea-stage">Development Stage</label>
+                    <select id="idea-stage" name="stage" class="glass-select">
+                        <option value="">Select Stage</option>
+                        <option value="concept">Concept</option>
+                        <option value="prototype">Prototype</option>
+                        <option value="mvp">MVP</option>
+                        <option value="beta">Beta</option>
+                        <option value="launched">Launched</option>
+                    </select>
+                </div>
+                <button type="submit" class="neon-btn">Submit Idea</button>
+            </form>
+        </div>
+
+        <!-- Existing Ideas Section -->
+        <div class="glass-panel">
+            <h3>Your Submitted Ideas</h3>
+            {% if ideas %}
+                <div class="ideas-list">
+                    {% for idea in ideas %}
+                        <div class="idea-card glass-card">
+                            <h4>{{ idea.title }}</h4>
+                            <p>{{ idea.description }}</p>
+                            <div class="idea-meta">
+                                <span class="category">Category: {{ idea.category }}</span>
+                                <span class="stage">Stage: {{ idea.stage }}</span>
+                                <span class="status">Status: {{ idea.status }}</span>
+                            </div>
+                            <div class="idea-actions">
+                                <button class="neon-btn small" onclick="editIdea({{ idea.id }})">Edit</button>
+                                <button class="neon-btn small" onclick="viewMentorFeedback({{ idea.id }})">View Feedback</button>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>No startup ideas submitted yet. Submit your first idea above!</p>
+            {% endif %}
+        </div>
+
+        <!-- Mentor Connection Section -->
+        <div class="glass-panel">
+            <h3>Connect with Mentors</h3>
+            <p>Get guidance from experienced entrepreneurs and industry experts.</p>
+            <button class="neon-btn" onclick="findMentor()">Find a Mentor</button>
+        </div>
+
+        <!-- Resources Section -->
+        <div class="glass-panel">
+            <h3>Startup Resources</h3>
+            <ul class="resource-list">
+                <li><a href="#" class="glass-link">Business Plan Templates</a></li>
+                <li><a href="#" class="glass-link">Funding Guides</a></li>
+                <li><a href="#" class="glass-link">Market Research Tools</a></li>
+                <li><a href="#" class="glass-link">Legal Resources</a></li>
+                <li><a href="#" class="glass-link">Pitch Deck Examples</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Additional glassmorphism styles for startup page */
+.glass-panel {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px 0;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.text-glow {
+    text-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
+}
+
+.description {
+    color: #e0e0e0;
+    margin-bottom: 30px;
+    font-size: 1.1em;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #fff;
+    font-weight: 500;
+}
+
+.glass-input, .glass-textarea, .glass-select {
+    width: 100%;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    color: #fff;
+    font-size: 1em;
+    backdrop-filter: blur(5px);
+}
+
+.glass-input::placeholder, .glass-textarea::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.glass-textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.ideas-list {
+    display: grid;
+    gap: 20px;
+}
+
+.idea-card {
+    padding: 15px;
+    margin: 10px 0;
+}
+
+.idea-meta {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+    font-size: 0.9em;
+    color: #ccc;
+}
+
+.idea-actions {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+.neon-btn.small {
+    padding: 8px 16px;
+    font-size: 0.9em;
+}
+
+.resource-list {
+    list-style: none;
+    padding: 0;
+}
+
+.resource-list li {
+    margin: 10px 0;
+}
+
+.glass-link {
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.glass-link:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+</style>
+
+<script>
+// JavaScript for interactive features
+function editIdea(ideaId) {
+    // Implement edit functionality
+    console.log('Editing idea:', ideaId);
+}
+
+function viewMentorFeedback(ideaId) {
+    // Implement view feedback functionality
+    console.log('Viewing feedback for idea:', ideaId);
+}
+
+function findMentor() {
+    // Implement mentor connection
+    console.log('Finding mentor');
+}
+
+// Form submission handling
+document.getElementById('startup-idea-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    // Handle form submission
+    console.log('Submitting startup idea');
+});
+</script>

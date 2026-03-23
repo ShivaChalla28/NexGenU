@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Courses - NEXGENU</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .student-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-top: 40px;
+        }
+        .course-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        .course-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.15);
+        }
+        .course-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        .course-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+        .enrolled-badge {
+            background: #10b981;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="glass-card" style="position: fixed; top: 0; left: 0; right: 0; z-index: 1000; margin: 1rem; border-radius: 50px;">
+        <div class="container flex justify-between items-center" style="padding: 0.75rem 1.5rem;">
+            <div class="flex items-center gap-4">
+                <h2 style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-size: 1.5rem; font-weight: 800;">
+                    NEXGENU
+                </h2>
+                <span style="color: #666; font-size: 14px;">Student Portal</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="{{ url_for('student_bp.dashboard') }}" class="btn btn-secondary btn-sm">Dashboard</a>
+                <span>Welcome, {{ current_user.name }}</span>
+                <a href="{{ url_for('auth.logout') }}" class="btn btn-secondary btn-sm">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <section class="student-header" style="margin-top: 80px;">
+        <div class="container">
+            <h1 style="font-size: 3rem; margin-bottom: 16px;">My Courses</h1>
+            <p style="font-size: 1.2rem; opacity: 0.9;">Explore and enroll in available courses</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section style="padding: 40px 0;">
+        <div class="container">
+            {% if enrolled_courses %}
+            <h2 style="margin-bottom: 24px;">Enrolled Courses</h2>
+            <div class="course-grid">
+                {% for course in enrolled_courses %}
+                <div class="course-card">
+                    <h3 style="margin-bottom: 12px;">{{ course.name }}</h3>
+                    <p style="color: #666; margin-bottom: 16px;">{{ course.description or 'No description available' }}</p>
+                    <div class="enrolled-badge">Enrolled</div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {% if available_courses %}
+            <h2 style="margin-bottom: 24px; margin-top: 40px;">Available Courses</h2>
+            <div class="course-grid">
+                {% for course in available_courses %}
+                <div class="course-card">
+                    <h3 style="margin-bottom: 12px;">{{ course.name }}</h3>
+                    <p style="color: #666; margin-bottom: 16px;">{{ course.description or 'No description available' }}</p>
+                    <form method="post" action="{{ url_for('student_bp.enroll_course', course_id=course.id) }}">
+                        <button type="submit" class="course-btn">Enroll Now</button>
+                    </form>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {% if not enrolled_courses and not available_courses %}
+            <div style="text-align: center; padding: 40px;">
+                <h3>No courses available at the moment.</h3>
+                <p style="color: #666;">Check back later for new course offerings.</p>
+            </div>
+            {% endif %}
+        </div>
+    </section>
+</body>
+</html>

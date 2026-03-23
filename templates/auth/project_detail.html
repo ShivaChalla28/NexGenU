@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Detail - NEXGENU</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        body{font-family:'Poppins',sans-serif;background:#f0f2f8;padding:20px;}
+        .card{max-width:900px;margin:0 auto;background:white;border-radius:12px;padding:24px;box-shadow:0 10px 30px rgba(0,0,0,0.08);}
+        .title{font-size:2rem;margin-bottom:16px;color:#2d3b65;}
+        .meta{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:20px;}
+        .meta span{background:#edf3ff;color:#2d3b65;padding:8px 14px;border-radius:999px;font-size:0.9rem;}
+        .section{margin-bottom:18px;}
+        .section h3{font-size:1.1rem;color:#2d3b65;margin-bottom:8px;}
+        .back-link{display:inline-block;margin-bottom:16px;color:#4c6ffc;text-decoration:none;font-weight:600;}
+        .back-link:hover{text-decoration:underline;}
+        .view-file{display:inline-block;margin-top:16px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;padding:10px 16px;border-radius:10px;text-decoration:none;font-weight:600;}
+    </style>
+</head>
+<body>
+    <div class="card">
+        <a class="back-link" href="{{ url_for('student_bp.projects') }}">← Back to Projects</a>
+        <div class="title">{{ project.title }}</div>
+
+        <div class="meta">
+            <span>Status: {{ project.status }}</span>
+            <span>Category: {{ project.category or 'N/A' }}</span>
+            <span>Submitted: {{ project.submission_date.strftime('%Y-%m-%d') if project.submission_date else 'N/A' }}</span>
+            {% if project.verification_date %}
+            <span>Verified: {{ project.verification_date.strftime('%Y-%m-%d') }}</span>
+            {% endif %}
+        </div>
+
+        <div class="section">
+            <h3>Description</h3>
+            <p>{{ project.description or 'No description provided.' }}</p>
+        </div>
+
+        <div class="section">
+            <h3>Project Owner</h3>
+            <p>{{ project.user.name }} ({{ project.user.unique_id }})</p>
+        </div>
+
+        {% if project.feedback %}
+        <div class="section">
+            <h3>Feedback</h3>
+            <p>{{ project.feedback }}</p>
+        </div>
+        {% endif %}
+
+        {% if project.file_path %}
+        <a class="view-file" href="{{ url_for('static', filename=project.file_path) }}" target="_blank">Open Project File</a>
+        {% endif %}
+    </div>
+</body>
+</html>

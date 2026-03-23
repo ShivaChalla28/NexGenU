@@ -1,0 +1,24 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+<div class="sidebar">
+    <h2>NEXGENU</h2>
+    <a href="/dashboard">Dashboard</a>
+    <a href="/projects">Projects</a>
+    <a href="/exams">Competitive Exams</a>
+    <a href="/startup">Startup Ideas</a>
+    <a href="/govt-jobs">Govt Jobs</a>
+    <a href="/certificates">Certificates</a>
+    <a href="/profile">Profile</a>
+    <a href="/logout">Logout</a>
+</div>
+
+<div class="main">
+    <div class="glass-card">
+        <h2>Take Exam: {{ exam_name }}</h2>
+        <form method="post">
+            <label for="score">Enter Score (0-100):</label>
+            <input type="number" name="score" id="score" min="0" max="100" required>
+            <button type="submit" class="neon-btn">Submit</button>
+        </form>
+    </div>
+</div>

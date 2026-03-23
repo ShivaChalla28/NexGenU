@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - NEXGENU</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .dashboard-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header Section */
+        .header-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 40px;
+            color: white;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3);
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .header-info h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header-info p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .header-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Main Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .card-title i {
+            color: #667eea;
+            font-size: 1.3rem;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .feature-card:hover {
+            border-color: #667eea;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+
+        .feature-name {
+            font-weight: 600;
+            color: #333;
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+
+        .feature-desc {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .quick-link {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            text-decoration: none;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+
+        .quick-link:hover {
+            transform: translateX(5px);
+            border-left-color: #667eea;
+            color: #667eea;
+        }
+
+        .quick-link-icon {
+            font-size: 1.5rem;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .quick-link-text {
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        /* Enrolled Courses */
+        .courses-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .course-item {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .course-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .course-info h4 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .course-info p {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .course-progress {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: conic-gradient(#667eea var(--progress), #e1e5e9 0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        /* Logout Button */
+        .logout-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            width: 100%;
+        }
+
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(245, 87, 108, 0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-section {
+                padding: 25px;
+            }
+
+            .header-info h1 {
+                font-size: 1.8rem;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header-top {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-wrapper">
+        <!-- Header Section -->
+        <div class="header-section">
+            <div class="header-top">
+                <div class="header-info">
+                    <h1>Welcome back, {{ current_user.name }}! 👋</h1>
+                    <p>Continue your learning journey with NEXGENU</p>
+                </div>
+                <div>
+                    <a href="{{ url_for('auth.logout') }}" class="logout-btn" style="width: auto; padding: 12px 40px;">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                </div>
+            </div>
+
+            <div class="header-stats">
+                <div class="stat-card">
+                    <div class="stat-number">{{ enrolled_courses|length }}</div>
+                    <div class="stat-label">Courses Enrolled</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">{{ exam_scores|length }}</div>
+                    <div class="stat-label">Exams Completed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">{{ certificates|length }}</div>
+                    <div class="stat-label">Certificates</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">{{ (language_proficiency|int) }}%</div>
+                    <div class="stat-label">Language Score</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">{{ behavior or 'GOOD' }}</div>
+                    <div class="stat-label">Behavior</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" style="font-size:1rem; line-height:1.2;">{{ mentor_info.name or '-' }}</div>
+                    <div class="stat-label">Mentor</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content-grid">
+            <div>
+                <!-- Quick Access Features -->
+                <div class="card">
+                    <div class="card-title">
+                        <i class="fas fa-th-large"></i>
+                        Learning Hub
+                    </div>
+                    <div class="features-grid">
+                        <div class="feature-card" onclick="window.location.href='{{ url_for('student_bp.courses') }}'">
+                            <div class="feature-icon">📚</div>
+                            <div class="feature-name">Courses</div>
+                            <div class="feature-desc">Explore & enroll courses</div>
+                        </div>
+                        <div class="feature-card" onclick="window.location.href='{{ url_for('student_bp.exams') }}'">
+                            <div class="feature-icon">✏️</div>
+                            <div class="feature-name">Exams</div>
+                            <div class="feature-desc">Take & review exams</div>
+                        </div>
+                        <div class="feature-card" onclick="window.location.href='{{ url_for('student_bp.projects') }}'">
+                            <div class="feature-icon">🎯</div>
+                            <div class="feature-name">Projects</div>
+                            <div class="feature-desc">Showcase your work</div>
+                        </div>
+                        <div class="feature-card" onclick="window.location.href='{{ url_for('student_bp.internships') }}'">
+                            <div class="feature-icon">💼</div>
+                            <div class="feature-name">Internships</div>
+                            <div class="feature-desc">Apply for opportunities</div>
+                        </div>
+                        <div class="feature-card" onclick="window.location.href='{{ url_for('student_bp.workshops') }}'">
+                            <div class="feature-icon">🎓</div>
+                            <div class="feature-name">Workshops</div>
+                            <div class="feature-desc">Attend skill sessions</div>
+                        </div>
+                        <div class="feature-card" onclick="window.location.href='{{ url_for('student_bp.startup') }}'">
+                            <div class="feature-icon">🚀</div>
+                            <div class="feature-name">Startups</div>
+                            <div class="feature-desc">Share your ideas</div>
+                        </div>
+                        <div class="feature-card" onclick="window.location.href='{{ url_for('student_bp.govt_job_preparation') }}'">
+                            <div class="feature-icon">🎯</div>
+                            <div class="feature-name">Govt Jobs</div>
+                            <div class="feature-desc">Preparation & training</div>
+                        </div>
+                        <div class="feature-card" onclick="window.location.href='{{ url_for('student_bp.jobs') }}'">
+                            <div class="feature-icon">💰</div>
+                            <div class="feature-name">Job Board</div>
+                            <div class="feature-desc">Browse opportunities</div>
+                        </div>
+                        <div class="feature-card" onclick="window.location.href='{{ url_for('student_bp.certificates') }}'">
+                            <div class="feature-icon">🏆</div>
+                            <div class="feature-name">Certificates</div>
+                            <div class="feature-desc">View credentials</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Enrolled Courses -->
+                {% if enrolled_courses %}
+                <div class="card">
+                    <div class="card-title">
+                        <i class="fas fa-book"></i>
+                        Your Enrolled Courses ({{ enrolled_courses|length }})
+                    </div>
+                    <div class="courses-list">
+                        {% for course in enrolled_courses[:5] %}
+                        <div class="course-item" style="--progress: {{ (85)|int }}%">
+                            <div class="course-info">
+                                <h4>{{ course.name }}</h4>
+                                <p>{{ course.description[:50] }}...</p>
+                            </div>
+                            <div class="course-progress">85%</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="card">
+                    <div class="card-title">
+                        <i class="fas fa-tasks"></i>
+                        Quick Activity Summary
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Daily Exams</div>
+                        <div class="info-value">{{ daily_exams|length }}</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Weekly Exams</div>
+                        <div class="info-value">{{ weekly_exams|length }}</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Monthly Exams</div>
+                        <div class="info-value">{{ monthly_exams|length }}</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Competitive Exams</div>
+                        <div class="info-value">{{ competitive_exams|length }}</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Branch Internships</div>
+                        <div class="info-value">{{ internships_by_branch|length }}</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Branch Projects</div>
+                        <div class="info-value">{{ project_branch|length }}</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Available Jobs in Area</div>
+                        <div class="info-value">{{ area_jobs|length }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="card">
+                    <div class="card-title">
+                        <i class="fas fa-user"></i>
+                        Profile
+                    </div>
+                    <a href="{{ url_for('student_bp.profile') }}" class="quick-link" style="margin-bottom: 15px;">
+                        <div class="quick-link-icon">👤</div>
+                        <div class="quick-link-text">View Full Profile</div>
+                    </a>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">
+                        <i class="fas fa-bolt"></i>
+                        Quick Links
+                    </div>
+                    <a href="{{ url_for('student_bp.courses') }}" class="quick-link">
+                        <div class="quick-link-icon">📚</div>
+                        <div class="quick-link-text">Browse Courses</div>
+                    </a>
+                    <a href="{{ url_for('student_bp.exams') }}" class="quick-link">
+                        <div class="quick-link-icon">✏️</div>
+                        <div class="quick-link-text">Start Exam</div>
+                    </a>
+                    <a href="{{ url_for('student_bp.projects') }}" class="quick-link">
+                        <div class="quick-link-icon">🎯</div>
+                        <div class="quick-link-text">Submit Project</div>
+                    </a>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">
+                        <i class="fas fa-chart-line"></i>
+                        Stats
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <p style="font-size: 0.9rem; color: #666; margin-bottom: 8px;">Analytic Score</p>
+                        <div style="width: 100%; height: 8px; background: #e1e5e9; border-radius: 10px; overflow: hidden;">
+                            <div style="width: {{ (analytic_score)|int }}%; height: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+                        </div>
+                        <p style="font-size: 0.9rem; color: #667eea; font-weight: 600; margin-top: 5px;">{{ (analytic_score)|int }}/100</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
